@@ -1,0 +1,71 @@
+// Class oriented program with single object
+#include<iostream.h>
+#include<conio.h>
+#include<stdio.h>
+#include<process.h>
+//class declartion
+class test
+{
+ int testcd;
+ char desc[20];
+ int noc;
+ int nc;
+ int calcent();
+ public:
+ void schedule();
+ void disptest();
+};
+//Defination
+//Calcent
+int test::calcent()
+{
+ int x;
+ x=(noc/100)+1;
+ return(x);
+}
+//Input
+void test::schedule()
+{
+ cout<<" ENTER THE FOLLOWING DETAILS: ";
+ cout<<"\n Testcode: ";
+ cin>>testcd;
+ cout<<"\n Description: ";
+ gets(desc);
+ cout<<"\n No. of Candidate: ";
+ cin>>noc;
+ nc=calcent();
+}
+//Output
+void test::disptest()
+{
+ cout<<"\n OUTPUT";
+ cout<<"\n Testcode: "<<testcd;
+ cout<<"\n Description: "<<desc;
+ cout<<"\n No. Of Candidates: "<<noc;
+ cout<<"\n Center Requireed: "<<nc;
+};
+void main()
+{
+ test T;
+ int x;
+ do
+ {
+  clrscr();
+  cout<<"\n 0. Exit.";
+  cout<<"\n 1. Schedule.";
+  cout<<"\n 2. Display.";
+  cout<<"\n\n Enter Your Choice: ";
+  cin>>x;
+  switch (x)
+  {
+   case 0 : exit(0);
+     break;
+   case 1 : T.schedule();
+     break;
+   case 2 : T.disptest();
+     break;
+   default : cout<<"\n Enter A Valid Choice";
+  }
+ getch();
+ }while(1);
+}
