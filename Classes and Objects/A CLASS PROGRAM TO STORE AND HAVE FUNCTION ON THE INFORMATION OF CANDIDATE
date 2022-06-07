@@ -1,0 +1,389 @@
+//CLASS CANDIDATE PROGRAMME
+#include<iostream.h>
+#include<conio.h>
+#include<string.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<iomanip.h>
+#include<ctype.h>
+class cdate
+{
+ int admno;//1000 to 5000
+ char name[20];
+ int cls;
+ char sec;
+ float per,fee;
+ void afee();
+ char cat[10];
+ /*
+ cat1-fee=7500
+ cat2-fee=5000
+ cat3-fee=2500
+ */
+ public:
+ void input();
+ void display();
+ int getadmno();
+ char* getname();
+ int getcls();
+ char getsec();
+ float getper();
+ float getfee();
+ char* getcat();
+};
+//fee calculator
+void cdate::afee()
+{
+ int c=strcmpi(cat,"CAT1");
+ if(c==0)
+  fee=7500;
+ else
+ {
+  c=strcmpi(cat,"CAT2");
+  if(c==0)
+   fee=5000;
+  else
+  {
+   c=strcmpi(cat,"CAT3");
+   if(c==0)
+    fee=2500;
+  }
+ }
+}
+//input
+void cdate::input()
+{
+ do
+ {
+  cout<<"\nENTER THE ADMISSION NUMBER: ";
+  cin>>admno;
+  if(admno>=1000 && admno<=5000)
+   break;
+  cout<<"\nADMISSION NUMBER SHOULD IN THE RANGE OF 1000 TO 5000.";
+ }while(1);
+ cout<<"\nENTER YOUR NAME: ";
+ gets(name);
+ cout<<"\nENTER YOUR CLASS: ";
+ cin>>cls;
+ cout<<"\nENTER YOUR SECTION: ";
+ cin>>sec;
+ cout<<"\nENTER YOUR PERCENTAGE: ";
+ cin>>per;
+ do
+ {
+  cout<<"\nENTER YOUR CATEGORY: ";
+  cin>>cat;
+  int c=strcmpi(cat,"CAT1");
+  if(c==0)
+   break;
+  else
+  {
+   c=strcmpi(cat,"CAT2");
+   if(c==0)
+    break;
+   else
+   {
+    c=strcmpi(cat,"CAT3");
+    if(c==0)
+     break;
+   }
+  }
+  cout<<"\nNOT VALID.RE-ENTER!!";
+ }while(1);
+ afee();
+}
+//F1-DISPLAY ALL THE DETAILS OF THE CANDIDATE
+void cdate::display()
+{
+ cout<<"\nADMISSION NUMBER: "<<admno;
+ cout<<"\nNAME: "<<name;
+ cout<<"\nCLASS: "<<cls;
+ cout<<"\nSECTION: "<<sec;
+ cout<<"\nPERCENTAGE: "<<per;
+ cout<<"\nCATEGORY: "<<cat;
+ afee();
+ cout<<"\nFEES: "<<fee;
+}
+//get private number
+//admno
+int cdate::getadmno()
+{
+ return(admno);
+}
+//name
+char* cdate::getname()
+{
+ return(name);
+}
+//class
+int cdate::getcls()
+{
+ return(cls);
+}
+//section
+char cdate::getsec()
+{
+ return(sec);
+}
+//percentage
+float cdate::getper()
+{
+ return(per);
+}
+//fees
+float cdate::getfee()
+{
+ return(fee);
+}
+//category
+char* cdate::getcat()
+{
+ return(cat);
+}
+//F2-TO DISPLAY THE DETAILS OF A GIVEN ADMISSION NUMBER.
+void dispadmno(cdate c[],int n)
+{
+ int adno;
+ cout<<"\nENTER THE ADMISSION NUMBER YOU WANT TO SEARCH FOR: ";
+ cin>>adno;
+ int pos=-1;
+ for(int i=0;i<n;i++)
+ {
+  if(c[i].getadmno()==adno)
+  {
+   pos=i;
+   break;
+  }
+ }
+ if(pos==-1)
+  cout<<"\nADMISSION NUMBER NIT FOUND.";
+ else
+  c[pos].display();
+}
+//F3-TO DISPLAY THE DETAILS OF THE CANDIDATES OF A SPECIFIC CATEGORY.
+void dispcat(cdate c[],int n)
+{
+ char CAT[10];
+ cout<<"\nENTER THE CATEGORY YOU WANT TO SEARCH FOR: ";
+ cin>>CAT;
+ int pos=-1;
+ for(int i=0;i<n;i++)
+ {
+  int X=strcmpi(CAT,c[i].getcat());
+  if(X==0)
+  {
+   pos=i;
+   c[i].display();
+  }
+ }
+ if(pos==-1)
+  cout<<"\nTHE CATEGORY IS NOT IN OUR LIST.";
+}
+/*F4-TO DISPLAY THE DETAILS OF THE CANDIDATES PAYING FEE IN THE GIVEN RANGE.
+ALSO FIND THE AVERAGE FEE PAID IN THE GIVEN RANGE.
+*/
+void rdispfee(cdate c[],int n)
+{
+ float f1,f2,sum=0,avg,t;
+ int ctr=0;
+ cout<<"\nENTER THE RANGE: ";
+ cin>>f1>>f2;
+ for(int i=0;i<n;i++)
+ {
+  t=c[i].getfee();
+  if(t>=f1 && t<=f2)
+  {
+   ctr++;
+   sum+=t;
+   c[i].display();
+  }
+ }
+ avg=sum/ctr;
+ cout<<"\nAVERAGE FEE PAID IS: "<<avg;
+}
+//F5-TO DISPLAY THE DETAILS OF THE STUDENTS OF SPECIFIC CLASS AND SECTION.
+void dispcls(cdate c[],int n)
+{
+ int cls;
+ char sec;
+ cout<<"\nENTER THE CLASS AND SECTION YOU ARE SEARCHING FOR: ";
+ cin>>cls>>sec;
+ int pos=-1;
+ for(int i=0;i<n;i++)
+ {
+  if(c[i].getcls()==cls)
+  {
+   if(c[i].getsec()==sec)
+   {
+    pos=i;
+    c[i].display();
+   }
+  }
+ }
+ if(pos==-1)
+  cout<<"\nCLASS AND SECTION IS NOT IN OUR RECORD.";
+}
+//F6-TO DISPLAY OF ANY THREE RANDOM CANDIDATES.
+void randomsel(cdate c[],int n)
+{
+ int C=0;
+ randomize();
+ do
+ {
+  int a=random(4001+1000);
+  for(int i=0;i<n;i++)
+  {
+   int x=c[i].getadmno();
+   if(x==a)
+   {
+    c[i].display();
+    C++;
+    break;
+   }
+  }
+ }while(C<=3);
+}
+//F7-TO DISPLAY THE DETAILS OF A SPECIFIC NAME FROM THE RECORDS.
+void dispname(cdate c[],int n)
+{
+ char name[20];
+ int i,pos=-1;
+ cout<<"\nENTER THE NAME YOU ARE SEARCHING FOR: ";
+ gets(name);
+ for(i=0;i<n;i++)
+ {
+  int x=strcmpi(c[i].getname(),name);
+  if(x==0)
+  {
+   pos=i;
+   break;
+  }
+ }
+ if(pos==-1)
+  cout<<"\nTHE NAME IS NOT IN OUR RECORDS.";
+ else
+  c[i].display();
+}
+/*F8-TO DISPLAY THE DETAILS IN A PERTICULAR RANGE OF PERCENTAGE.
+ALSO FIND ITS AVERAGE PERCENTAGE.
+*/
+void rdispper(cdate c[], int n)
+{
+ float p1,p2,p,sum=0,avg;
+ int i,pos=-1,ctr=0;
+ cout<<"\nENTER THE RANGE OF THE PERCENTAGE: ";
+ cin>>p1>>p2;
+ for(i=0;i<n;i++)
+ {
+  p=c[i].getper();
+  if(p>=p1 && p<=p2)
+  {
+   pos=i;
+   sum+=p;
+   ctr++;
+   c[i].display();
+  }
+ }
+ avg=sum/ctr;
+ if(pos==-1)
+  cout<<"\nTHEIR IS NO RECORD IN THE PERTICULAR RANGE.";
+ else
+  cout<<"\nAVERAGE OF THE RECORDS: "<<avg;
+}
+//F9-TO DISPLAY THE RECORDS OF A SPECIFIC PERCENTAGE FROM THE RECORDS.
+void dispper(cdate c[],int n)
+{
+ float p;
+ int i,pos=-1;
+ cout<<"\nENTER THE PERCENTAGE YOU ARE SEARCHING FOR: ";
+ cin>>p;
+ for(i=0;i<n;i++)
+ {
+  if(p==c[i].getper())
+  {
+   pos=i;
+   c[i].display();
+  }
+ }
+ if(pos==-1)
+  cout<<"\nTHE PERCENTAGE IS NOT IN THE RECORDS.";
+}
+//MAIN
+void main()
+{
+ cdate c[20];
+ int ch,i,n,x;
+ clrscr();
+ cout<<"\nENTER THE NUMBER OF THE CANDIDATES YOU ARE INSERTING: ";
+ cin>>n;
+ for(i=0;i<n;i++)
+ {
+  cout<<"\nENTER "<<i+1<<" CANDIDATE DETAILS: ";
+  c[i].input();
+ }
+ do
+ {
+  clrscr();
+  cout<<setw(40)<<"\nCLASS FUNCTIONS";
+  cout<<"\n1.DISPLAY THE DETAILS OF ALL CANDIDATES.";
+  cout<<"\n2.SEARCH AND DISPLAY THE DETAILS WITH ITS SPECIFIC ADMISSION NUMNER.";
+  cout<<"\n3.SEARCH AND DISPLAY THE DETAILS WITH THE SECIFIC CATEGORY.";
+  cout<<"\n4.DISPLAY THE DETAILS OF THE CANDIDATES IN A RANGE OF FEE AND ALSO FIND ITS AVERAGE VALUE.";
+  cout<<"\n5.DISPLAY THE DETAILS OF THE CANDIDATES OF SPECIFIC CLASS AND SECTION.";
+  cout<<"\n6.DISPLAY ANY THREE DETAILS OF THE CANDIDATE.";
+  cout<<"\n7.SEARCH AMD DISPLAY THE DETAILS WITH SPECIFIC NAME.";
+  cout<<"\n8.DISPLAY THE DETAILS OF THE CANDIDATES IN A RANGE OF PERCENTAGE AND ALSO FIND ITS AVERAGE VALUE.";
+  cout<<"\n9.SEARCH AND DISPLAY THE DETAILS WITH SEPECIFIC PERCENTAGE.";
+  cout<<"\n0.EXIT.";
+  cout<<"\nENTER YOUR CHOICE: ";
+  cin>>ch;
+  switch(ch)
+  {
+   case 0 ://exit
+    exit(0);
+    break;
+   case 1 ://display details
+    clrscr();
+    for(i=0;i<n;i++)
+    {
+     cout<<"\nDETAILS OF "<<i+1<<" CANDIDATE: ";
+     c[i].display();
+    }
+    break;
+   case 2 ://admno specific
+    clrscr();
+    dispadmno(c,n);
+    break;
+   case 3 ://category specific
+    clrscr();
+    dispcat(c,n);
+    break;
+   case 4 ://fee range + average
+    clrscr();
+    rdispfee(c,n);
+    break;
+   case 5 ://class and section specific
+    clrscr();
+    dispcls(c,n);
+    break;
+   case 6 ://random selection
+    clrscr();
+    randomsel(c,n);
+    break;
+   case 7 ://name specific
+    clrscr();
+    dispname(c,n);
+    break;
+   case 8 ://percentage range + average
+    clrscr();
+    rdispper(c,n);
+    break;
+   case 9 ://percentage specific
+    clrscr();
+    dispper(c,n);
+    break;
+   default :cout<<"\nNOT VALID!!";
+  }
+  getch();
+ }while(1);
+}
