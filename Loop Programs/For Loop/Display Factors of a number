@@ -1,0 +1,40 @@
+#include<iostream.h>
+
+#include<conio.h>
+
+void main()
+
+{
+
+ int a,fac,i;
+
+ fac=0;
+
+ clrscr();
+
+ cout<<"\nEnter the number: ";
+
+ cin>>a;
+
+ cout<<"\nYour number is: "<<a;
+
+ cout<<"\nFactors are: "<<'\n';
+
+ for(i=1;i<=a/2;i++)
+
+  if(a%i==0)
+
+  {
+
+   cout<<i<<',';
+
+   fac++;
+
+  }
+
+ cout<<"\nNumber of factors are: "<<fac;
+
+ getch();
+
+}
+
