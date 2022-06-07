@@ -1,0 +1,282 @@
+#include<iostream.h>
+
+#include<conio.h>
+
+#include<math.h>
+
+#include<stdlib.h>
+
+unsigned long factorial(unsigned no)
+
+{
+
+ unsigned long fac=1;
+
+ int i;
+
+ for(i=1;i<=no;i++)
+
+  fac=fac*i;
+
+ return(fac);
+
+}
+
+//S-1 y+y^3/2!+y^5/3!.......+n terms [y=double, n=int]
+
+double s1 (double y,int n)
+
+{
+
+ double sum=0,fac,term;
+
+ int i,pi,p;
+
+ cout<<"\n Series is\n ";
+
+ for(i=1,p=1;i<=n;i++,p+=2)
+
+ {
+
+  p=pow(y,pi);
+
+  fac=factorial(i);
+
+  term=p/fac;
+
+  cout<<term<<" + ";
+
+  sum+=term;
+
+ }
+
+ cout<<"\t=";
+
+ return(sum);
+
+}
+
+
+  //S-2 1/x-3!x^2+5!/x^3-7!/x^4+9!/x^5......n term [x=double, n=int]
+
+double s2 (double x,int n)
+
+{
+
+ double sum=0,fac,p,term;
+
+ int i,pi,sign=1;
+
+ cout<<"\n Series is\n";
+
+ for(i=1,pi=1;i<=n;pi++,i+=2)
+
+ {
+
+  p=pow(x,pi);
+
+  fac=factorial(i);
+
+  term=fac/p;
+
+  term*=sign;
+
+  if(sign==1)
+
+   cout<<"+";
+
+  cout<<" "<<term;
+
+  sign*=(-1);
+
+  sum+=term;
+
+  }
+
+ cout<<"\t=";
+
+ return(sum);
+
+}
+
+//S-3 x-x^3/3+x^5/5-x^7/7+x^9/9......nterms [x=float]
+
+float s3 (float x, int n)
+
+{
+
+ float sum=0,term,p;
+
+ int i,sign=1;
+
+ cout<<"\n Series is\n";
+
+ for(i=1;i<=n;i+=2)
+
+ {
+
+  p=pow(x,i);
+
+
+term=p/i;
+
+  term*=sign;
+
+  if(sign==1)
+
+   cout<<"+";
+
+  sign*=(-1);
+
+  cout<<" "<<term;
+
+  sum+=term;
+
+  }
+
+ cout<<"\t=";
+
+ return(sum);
+
+}
+
+//S-4 1+2+3+4......n terms
+
+unsigned s4 (int no)
+
+{
+
+ int i;
+
+ unsigned sum=0;
+
+ cout<<"\n Series is\n";
+
+ for(i=1;i<=no;i++)
+
+ {
+
+  sum+=i;
+
+  cout<<" "<<i;
+
+  }
+
+ cout<<"\t=";
+
+ return(sum);
+
+}
+
+//S-5 1+2!+3!+4!.........nterms [n=int]
+
+unsigned long s5 (int n)
+
+{
+
+ unsigned long sum=0;
+
+ int i;
+
+cout<<"\n Sreies is\n";
+
+ for(i=1;i<=n;i++)
+
+ {
+
+  sum+=factorial(i);
+
+  cout<<" "<<factorial(i);
+
+  }
+
+ cout<<"\t=";
+
+ return(sum);
+
+}
+
+void main()
+
+{
+
+ unsigned long a,b;
+
+ int x;
+
+ do
+
+ {
+
+  clrscr();
+
+  cout<<"\n 0. Exit.";
+
+  cout<<"\n 1. y+y^3/2!+y^5/3!.......+n terms.";
+
+  cout<<"\n 2. 1/x-3!x^2+5!/x^3-7!/x^4+9!/x^5......n term.";
+
+  cout<<"\n 3. x-x^3/3+x^5/5-x^7/7+x^9/9......nterms.";
+
+  cout<<"\n 4. 1+2+3+4+........n terms.";
+
+  cout<<"\n 5. 1+2!+3!+4!.........nterms.";
+
+  cout<<"\n\n\n ENTER YOUR CHOICE.";
+
+  cin>>x;
+
+  switch(x)
+
+  {
+
+   case 0 : exit(0);
+
+   case 1 : cout<<"\n Enter two numbers. ";
+
+     cin>>a>>b;
+
+     cout<<s1(a,b);
+
+     break;
+
+   case 2 : cout<<"\n Enter two numbers. ";
+
+     cin>>a>>b;
+
+     cout<<s2(a,b);
+
+     break;
+
+   case 3 : cout<<"\n Enter two numbers. ";
+
+     cin>>a>>b;
+
+     cout<<s3(a,b);
+
+     break;
+
+   case 4 : cout<<"\n Enter a number. ";
+
+     cin>>a;
+
+     cout<<s4(a);
+
+     break;
+
+   case 5 : cout<<"\n Enter a number. ";
+
+     cin>>a;
+
+     cout<<s5(a);
+
+     break;
+
+   }
+
+  getch();
+
+ }while(1);
+
+}
+
