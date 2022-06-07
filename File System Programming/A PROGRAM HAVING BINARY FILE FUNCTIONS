@@ -1,0 +1,401 @@
+//Binary File Date 22/12/19
+#include<conio.h>
+#include<iostream.h>
+#include<fstream.h>
+#include<stdio.h>
+#include<iomanip.h>
+#include<string.h>
+#include<process.h>
+struct stu
+{
+ int admno;
+ char name[40];
+ char cls[10];
+ char sec;
+ float marks;
+};
+//F-1 To create
+void create ()
+{
+ ofstream f("stu.dat",ios::binary);
+ char reply;
+ if (!f)
+ {
+  cout<<"\n File Does Not Exist.";
+  getch();
+  return;
+ }
+stu s;
+ do
+ {
+  cout<<"\n Enter The Details.";
+  cout<<"\n Admission No. : ";
+  cin>>s.admno;
+  cout<<"\n Name: ";
+  gets(s.name);
+  cout<<"\n Class: ";
+  cin>>s.cls;
+  cout<<"\n Section : ";
+  cin>>s.sec;
+  cout<<"\n Marks: ";
+  cin>>s.marks;
+  f.write((char*)&s,sizeof(s));
+  cout<<"\n Enter Y to enter more.";
+  cin>>reply;
+ }while(reply=='y' || reply=='Y');
+ f.close();
+}
+//F-2 To add record in exisiting file
+void app ()
+{
+ ofstream f ("stu.dat",ios::binary|ios::app|ios::nocreate);
+ if (!f)
+ {
+  cout<<"\n File Does Not Exist.";
+  getch();
+  return;
+ }
+ stu s;
+ int i,reply;
+cout<<"\n enter no. of record to add";
+ cin>>reply;
+for(i=0;i<reply;i++)
+ {
+  cout<<"\n Enter admno: ";
+  cin>>s.admno;
+  cout<<"\n Enter Name: ";
+  gets(s.name);
+  cout<<"\n Enter Class: ";
+  cin>>s.cls;
+  cout<<"\n Enter Section: ";
+  cin>>s.sec;
+  cout<<"\n Enter Marks: ";
+  cin>>s.marks;
+  f.write((char*)&s,sizeof(s));
+ }
+ f.close();
+}
+//F-3 Display
+void disp()
+{
+ifstream f("stu.dat",ios::binary);
+ if (!f)
+ {
+  cout<<"\n File Does Not Exist.";
+  getch();
+  return;
+ }
+ stu s;int i=0;
+ while(f.read((char*)&s,sizeof(s)))
+ {
+  i++;
+  cout<<"\n\n"<<i<<" record";
+  cout<<"\n Admno: "<<s.admno;
+  cout<<"\n Name: "<<s.name;
+  cout<<"\n Class: "<<s.cls;
+  cout<<"\n Section: "<<s.sec;
+  cout<<"\n Marks: "<<s.marks;
+  }
+ f.close();
+}
+//F-4 Searching
+void search_admno()
+{
+ ifstream f("stu.dat",ios::binary);
+ if(!f)
+ {
+  cout<<"|n File does not eist.";
+  getch();
+  return;
+ }
+ stu s;
+ int adno,flag=0;
+ cout<<"\n Enter adno that you want to find: ";
+ cin>>adno;
+while(f.read((char*)&s,sizeof(s)))
+ {
+  if(s.admno==adno)
+  {
+   cout<<"\n DETAILS ARE:-\n";
+   cout<<"\n NAME: "<<s.name;
+   cout<<"\n CLASS: "<<s.cls;
+   cout<<"\n SECTION: "<<s.sec;
+   cout<<"\n MARKS: "<<s.marks;
+   flag=1;
+   break;
+  }
+ }
+ if (flag==0)
+  cout<<"\n Not Found";
+ f.close();
+}
+//F-5 Seaching sec and class
+void sclass()
+{
+ ifstream f("stu.dat",ios::binary);
+ if(!f)
+ {
+  cout<<"|n File does not eist.";
+  getch();
+  return;
+ }
+ stu s;
+ int flag=0,c;
+ char cl[10],se;
+ cout<<"\n Enter class: ";
+ cin>>cl;
+ cout<<"|n Enter section: ";
+ cin>>se;
+ while(f.read((char*)&s,sizeof(s)))
+ {
+  c=strcmpi(s.cls,cl);
+  if(c==0 && s.sec==se)
+  {
+   cout<<"\The Details Are:-";
+   cout<<"\n ADMNO. : "<<s.admno;
+   cout<<"\n NAME: "<<s.name;
+   cout<<"\n CLASS: "<<s.cls;
+   cout<<"\n SECTION: "<<s.sec;
+   cout<<"\n MARKS: "<<s.marks;
+   flag=1;
+   break;
+  }
+ }
+ if(flag==0)
+ cout<<"\n NOT FOUND.";
+ f.close();
+}
+//F-6 deleting (For Class)
+void delcls (char cl[10])
+{
+ ifstream f("stu.dat",ios::binary);
+ ofstream temp("temp.dat",ios::binary);
+ if(!f)
+ {
+  cout<<"|n File does not eist.";
+  getch();
+  return;
+ }
+ if(!temp)
+ {
+  cout<<"|n File does not eist.";
+  getch();
+  return;
+ }
+ stu s;
+ int flag=0,c;
+ while(f.read((char*)&s,sizeof(s)))
+ {
+  c=strcmpi(s.cls,cl);
+  if(c!=0)
+  {
+   temp.write((char*)&s,sizeof(s));
+   flag=1;
+  }
+ }
+ f.close();
+ temp.close();
+ if(flag==0)
+  cout<<"\n NOT FOUND.";
+ else
+ {
+  remove("stu.dat");
+  rename("temp.dat","stu.dat");
+  cout<<"\n Record deleted";
+ }
+}
+//F-7 Sorting
+void sort()
+{
+ fstream f;
+ f.open ("stu.dat",ios::in | ios::binary);
+ if(!f)
+ {
+  cout<<"|n File does not eist.";
+  getch();
+  return;
+ }
+ stu st[100],temp;
+ int n=0,pos,min;
+ while(f.read((char*)&st[n],sizeof(st)))
+  n++;
+ for(int i=0;i<n;i++)
+ {
+  min=st[i].admno;
+  for(int j=i+1;j<n;j++)
+   if(st[j].admno<min)
+   {
+    min=st[j].admno;
+    pos=j;
+   }
+  if(pos!=i)
+  {
+   temp=st[i];
+   st[i]=st[j];
+   st[j]=temp;
+  }
+ }
+ f.close();
+ f.open("stu.dat",ios::out|ios::binary);
+ for(i=0;i<n;i++)
+  f.write((char*)&st[i],sizeof(st));
+ cout<<"\n Sorted";
+ f.close();
+}
+//F-8 Insertion
+void insert()
+{
+ ifstream f1 ("stu.dat",ios::binary);
+ ofstream f2 ("temp.dat",ios::binary);
+ if(!f1)
+ {
+  cout<<"\n File Does Not Exist.";
+  getch();
+  return;
+ }
+ if(!f2)
+ {
+  cout<<"\n File Does Not Exist.";
+  getch();
+  return;
+ }
+ stu os,ns;
+ char eof='y';
+ cout<<"\n ENTER THE DETAILS OF A NEW RECORD.";
+ cout<<"\n\n ADMNO: ";
+ cin>>ns.admno;
+ cout<<"\n NAME: ";
+ gets(ns.name);
+ cout<<"\n CLASS: ";
+ cin>>ns.cls;
+ cout<<"\n SECTION: ";
+ cin>>ns.sec;
+ cout<<"\n MARKS: ";
+ cin>>ns.marks;
+ while(f1.read((char*)&os,sizeof(os)))
+ {
+  if(os.admno<ns.admno)
+   f2.write((char*)&os,sizeof(os));
+  else
+  {
+   f2.write((char*)&ns,sizeof(ns));
+   eof='n';
+   break;
+  }
+ }
+ while(f1.read((char*)&os,sizeof(os)))
+  f2.write((char*)&os,sizeof(os));
+ if(eof=='y')
+  f2.write((char*)&ns,sizeof(ns));
+ f1.close();
+ f2.close();
+ remove("stu.dat");
+ rename("temp.dat","stu.dat");
+ cout<<"\n Inserted";
+}
+//F-8 UPDATION-To Update Marks to 33 Of Students That Scored Between 28-32 (pointers)
+void update()
+{
+ fstream f ("stu.dat",ios::in|ios::out|ios::binary);
+ if(!f)
+ {
+  cout<<"\n File Does Not Exist.";
+  getch();
+  return;
+ }
+ stu s;
+ int rc,p=0;
+ while(f.read((char*)&s,sizeof(s)))
+ {
+  rc++;
+  if(s.marks>=28 && s.marks<=32)
+  {
+   p=1;
+   s.marks=33;
+   f.seekg((rc-1)*sizeof(s));
+   f.write((char*)&s,sizeof(s));
+   cout<<"\n Updated";
+  }
+ }
+ if(p==0)
+  cout<<"\n No Change.";
+ f.close();
+}
+//F-10 To Know the size and no of records in a file
+void size ()
+{
+ ifstream f ("stu.dat",ios::binary|ios::ate);
+ if(!f)
+ {
+  cout<<"\n File Does Not Exist.";
+  getch();
+  return;
+ }
+ stu s;
+ long si;
+ si=f.tellg();
+ cout<<"\n Size of File: "<<si;
+ cout<<"\n No. Of records: "<<(si/sizeof(s));
+ f.close();
+}
+//Main
+void main()
+{
+ fstream f ("stu.dat",ios::binary|ios::in|ios::out);
+ int ch;
+ do
+ {
+  clrscr();
+  //Menu
+  cout<<"\n 0. Exit.";
+  cout<<"\n 1. To Enter The Records.";
+  cout<<"\n 2. To Enter A New Record.";
+  cout<<"\n 3. To Display The Records.";
+  cout<<"\n 4. To Search An Admno.";
+  cout<<"\n 5. To search By Section And Class.";
+  cout<<"\n 6. To Delete Records of a Perticular Class.";
+  cout<<"\n 7. To Sort The Records In the Class.";
+  cout<<"\n 8. To Insert a Record In tHe Class.";
+  cout<<"\n 9. To Update The Marks Of The Failind Students.";
+  cout<<"\n 10. To Get The Size And No. Of Records.";
+  cout<<"\n\n ENTER YOUR CHOICE: ";
+  cin>>ch;
+  switch (ch)
+  {
+   case 0 : exit(0);
+     break;
+   case 1 : clrscr();
+     cout<<"\n INPUT\n";
+     create();
+     break;
+   case 2 : clrscr();
+     cout<<"\n ADDITION OF RECORD \n";
+     app();
+     break;
+   case 3 : clrscr();
+     cout<<"\n DISPLAY";
+     disp();
+     break;
+   case 4 : search_admno();
+     break;
+   case 5 : sclass();
+     break;
+   case 6 : char c[10];
+     cout<<"\n Enter The Class Which Recoreds You Want To Delete: ";
+     cin>>c;
+     delcls(c);
+     break;
+   case 7 : sort();
+     disp();
+     break;
+   case 8 : insert();
+     break;
+   case 9 : update();
+     break;
+   case 10 : size();
+      break;
+   default : cout<<"\n Please Enter A Valid Option.";
+  }
+  getch();
+ }while(1);
+}
