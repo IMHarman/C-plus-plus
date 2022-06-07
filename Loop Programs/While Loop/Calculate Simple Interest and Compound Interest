@@ -1,0 +1,47 @@
+#include<iostream.h>
+
+#include<conio.h>
+
+#include<math.h>
+
+void main()
+
+{
+
+ float p,r,t,si,ci,diff,c;
+
+ char reply;
+
+ clrscr();
+
+ reply='y';
+
+ while(reply=='y'||reply=='Y')
+
+ {
+
+  cout<<"\nEnter principle,rate,time: ";
+
+  cin>>p>>r>>t;
+
+  si=(p*r*t)/100;
+
+  c=1+r/100;
+
+  ci=(p*pow(c,t))-p;
+
+  diff=ci-si;
+
+   cout<<"\nFor the values of the principle,rate,time as"<<p<<','<<r<<','<<t;
+
+   cout<<"\nSimple interest="<<si<<"\nCompound interest="<<ci<<"\nDifference="<<diff;
+
+   cout<<"\nEnter y or Y to continue: ";
+
+   cin>>reply;
+
+ }
+
+ getch();
+
+}
