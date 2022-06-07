@@ -1,0 +1,241 @@
+//MATRIX FUNCTIONS
+#include<iostream.h>
+#include<conio.h>
+#include<process.h>
+#include<stdlib.h>
+#include<stdio.h>
+#include<string.h>
+class mat
+{
+ int A[10][10];
+ int m;
+ int n;
+ public:
+ mat();
+ mat(int,int);
+ //mat(mat&);
+ void input();
+ void rdisp();
+ void cdisp();
+ void diagonal();
+ void upperdiag();
+ void matsum(mat,mat);
+ void matdiff(mat,mat);
+ void mattrans();
+ void matmulti(mat,mat);
+};
+//DEFAULT CONSTRUCTOR
+mat::mat()
+{m=0; n=0;
+}
+//PARAMITERISED CONSTRUCTOR
+mat::mat(int x,int y)
+{ m=x; n=y; }
+/*COPY CONSTRUCTOR
+mat::mat(mat &M)
+{ m=M.m;
+   n=M.n;
+  int i,j;
+  for(i=0;i<m;i++)
+  {
+    for(j=0;j<n;j++)
+     A[i][j]=M.A[i][j];
+   }
+}*/
+//F1-TO INPUT A MATRIX OF SIZE M x N
+void mat::input()
+{
+ int i,j;
+ for(i=0;i<m;i++)
+ { for(j=0;j<n;j++)
+    { cout<<"\nENTER THE VALUE OF THE CELL: ";
+      cin>>A[i][j];
+     }
+  }
+}
+//F2-A FUNCTION TO DISPLAY M x N ROW-WISE
+void mat::rdisp()
+{ int i,j;
+   for(i=0;i<m;i++)
+   { cout<<'\n';
+       for(j=0;j<n;j++)
+       cout<<A[i][j]<<'\t';
+     }
+}
+//F3-A FUNCTION TO DISPLAY M x N MATRIX COLUMN WISE
+void mat::cdisp()
+{ int i,j;
+ for(j=0;j<n;j++)
+ { cout<<"\n";
+    for(i=0;i<m;i++)
+     cout<<A[i][j]<<'\t';
+  }
+}
+//F4-A FUNCTION TO DISPLAY LEFT AND RIGHT DIAGONAL ELEMENT SAPARATELY WITH THEIR SUM AND AVERAGE
+void mat::diagonal()
+{
+ if(m!=n)
+ {
+  cout<<"\nNOT A SQUARE MATRIX.";
+  getch();
+  return;
+ }
+ int i,j,lsum=0,rsum=0;
+ cout<<"\nLEFT DIAGONAL ELEMENTS ARE: ";
+ for(i=0;i<m;i++)
+   { cout<<A[i][i]<<'\t';
+      lsum+=A[i][i];
+    }
+ cout<<"\nLEFT DIAGONAL SUM: "<<lsum;
+ cout<<"\nLEFT DIAGONAL AVERAGE: "<<(float)lsum/m;
+ cout<<"\n RIGHT DIAGONAL ELEMENTS ARE:";
+ for(i=0,j=n-1;i<m;i++,j--)
+   { cout<<A[i][j]<<'\t';
+      rsum+=A[i][j];
+    }
+ cout<<"\nRIGHT DIAGONAL SUM: "<<rsum;
+ cout<<"\nRIGHT DIAGONAL AVERAGE: "<<(float)rsum/m;
+}
+//F5-SUM OF UPPER DIAGONAL ELEMENTS
+void mat::upperdiag()
+{
+ if(m!=n)
+ { cout<<"\nNOT A SQUARE MATRIX.";
+    getch();
+    return;
+ }
+ int i,j,sum=0;
+ for(i=0;i<m;i++)
+ { cout<<'\n';
+    for(j=i+1;j<n;j++)
+   { cout<<A[i][j]<<'\t';
+ sum+=A[i][j];
+     }
+ }
+ cout<<"\nSUM OF UPPER DIAGONAL SUM IS: "<<sum;
+}
+//F6-SUM OF MATRIX
+void mat::matsum(mat m1,mat m2)
+{
+ int i,j;
+ m=m1.m;
+ n=m1.n;
+ for(i=0;i<m;i++)
+ { for(j=0;j<n;j++)
+      A[i][j]=m1.A[i][j]+m2.A[i][j];
+ }
+}
+//F7-DIFFERENCE OF MATRIX
+void mat::matdiff(mat m1,mat m2)
+{
+ int i,j;
+ m=m1.m;
+ n=m1.n;
+ for(i=0;i<m1.m;i++)
+  for(j=0;j<m1.n;j++)
+  { A[i][j]=m1.A[i][j]-m2.A[i][j];
+   }
+}
+//F8-TRANSPOSE OF A MATRIX
+void mat::mattrans()
+{ mat m2;
+  m2.m=n;
+  m2.n=m;
+ int i,j;
+ for(i=0;i<m;i++)
+  for(j=0;j<n;j++)
+   m2.A[j][i]=A[i][j];
+ m2.rdisp();
+}
+//F9-MULTIPLICATION OF MATRIX
+void mat::matmulti(mat m1,mat m2)
+{m=m1.m;
+ int r=m1.n;
+ n=m2.n;
+ int i,j,k;
+ for(i=0;i<m;i++)
+  for(j=0;j<n;j++)
+  {
+   A[i][j]=0;
+   for(k=0;k<r;k++)
+    A[i][j]+=m1.A[i][k]*m2.A[k][j];
+    //c[mxn]+=a[mxr]*b[rxn]
+  }
+}
+void main()
+{
+ clrscr();
+ int ch,a,x,y;
+ cout<<"\n ENTER THE DIMENSION OF MATRIX";
+ cin>>x>>y;
+ mat m(x,y);
+ do
+ {
+  clrscr();
+  cout<<"\n\t\t\tMATRIX CLASS FUNCTION";
+  cout<<"\n1.INPUT A MATRIX.";
+  cout<<"\n2.ROW WISE DISPLAY.";
+  cout<<"\n3.COLUMN WISE DISPLAY.";
+  cout<<"\n4.DISPLAY THE SUM AND AVERAGE OF THE DIAGONAL.";
+  cout<<"\n5.DISPLAY THE SUM OF UPPER DIAGONAL ELEMENTS.";
+  cout<<"\n6.SUM OF TWO MATRICES.";
+  cout<<"\n7.DIFFERENCE OF TWO MATRICES.";
+  cout<<"\n8.TRANSPOSE OF THE MATRIX.";
+  cout<<"\n9.MULTIPLICATION OF TWO MATRICES.";
+  cout<<"\n0.EXIT.";
+  cout<<"\nENTER YOUR CHOICE: ";
+  cin>>ch;
+  switch(ch)
+  {
+   case 0 : {exit(0);
+        break;}
+   case 1 :{clrscr();
+     m.input();
+      break;}
+   case 2 :{clrscr();
+       m.rdisp();
+       break;}
+   case 3 : {clrscr();
+       m.cdisp();
+       break;}
+   case 4 :{clrscr();
+        m.diagonal();
+        break;}
+   case 5 : { clrscr();
+        m.upperdiag();
+        break; }
+   case 6 :{ clrscr();
+  int b,c;
+   cout<<"\n ENTER THE DIMENSION OF SECOND MATRIX";
+     cin>>b>>c;
+      mat m1(b,c),m2;
+       m1.input();
+       m2.matsum(m,m1);
+       m2.rdisp();
+       break;}
+   case 7 :{clrscr();
+   int b,c;
+   cout<<"\n ENTER THE DIMENSION OF SECOND MATRIX";
+     cin>>b>>c;
+    mat m1(b,c),m2;
+       m1.input();
+       m2.matdiff(m,m1);
+     m2.rdisp();
+        break;}
+  case 8 :{ clrscr();
+   m.mattrans();
+       break;}
+   case 9 :{ clrscr();
+    int b,c;
+   cout<<"\n ENTER THE DIMENSION OF SECOND MATRIX";
+     cin>>b>>c;
+    mat m1(b,c),m2;
+     m1.input();
+     m2.matmulti(m,m1);
+     m2.rdisp();
+        break;}
+   default:cout<<"\nENTER THE VALID VALUE.";
+  }
+  getch();
+ }while(1);
+}
