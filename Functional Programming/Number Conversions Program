@@ -1,0 +1,282 @@
+#include<iostream.h>
+
+#include<conio.h>
+
+#include<math.h>
+
+#include<stdlib.h>
+
+
+//F1-DECIMAL TO BINARY
+
+unsigned long dectobin(int dec)
+
+{
+
+ unsigned long b=0;
+
+ int i=0,r;
+
+ do
+
+ {
+
+  r=dec%2;
+
+  b=b+r*pow(10,i++);
+
+  dec=dec/2;
+
+ }while(dec!=0);
+
+ return(b);
+
+}
+
+
+//F2-BINARY TO DECIMAL
+
+int bintodec(unsigned long bin)
+
+{
+
+ int dec=0;
+
+ int i=0,r;
+
+ do
+
+ {
+
+  r=bin%10;
+
+  dec=dec+r*pow(2,i++);
+
+  bin=bin/10;
+
+ }while(bin!=0);
+
+ return(dec);
+
+}
+
+
+//F3-DECIMAL TO OCTAL
+
+unsigned long dectooct(int dec)
+
+{
+
+ unsigned long oct=0;
+
+ int i=0,r;
+
+ do
+
+ {
+
+  r=dec%8;
+
+  oct+=r*pow(10,i++);
+
+  dec/=8;
+
+ }while(dec!=0);
+
+ return(oct);
+
+}
+
+
+//F4-OCTAL TO DECIMAL
+
+int octtodec(int oct)
+
+{
+
+ int dec=0,i=0,r;
+
+ do
+
+ {
+
+  r=oct%10;
+
+  dec+=r*pow(8,i++);
+
+  oct/=10;
+
+ }while(oct!=0);
+
+ return(dec);
+
+}
+
+
+//F5-OCTAL TO BINARY
+
+unsigned long octtobin(int oct)
+
+{
+
+ unsigned long bin=0;
+
+ int dec;
+
+ dec=octtodec(oct);
+
+ bin=dectobin(dec);
+
+ return(bin);
+
+}
+
+
+//F6-BINARY TO OCTAL
+
+int bintooct(unsigned long bin)
+
+{
+
+ int oct=0,dec;
+
+ dec=bintodec(bin);
+
+ oct=dectooct(dec);
+
+ return(oct);
+
+}
+
+
+//MAIN
+
+void main()
+
+{
+
+ int ch,d,o;
+
+ unsigned long b;
+
+ do
+
+ {
+
+  clrscr();
+
+  cout<<"\nNUMBER CONVERSIONS";
+
+  cout<<"\n1.DECIMAL TO BINARY";
+
+  cout<<"\n2.BINARY TO DECIMAL";
+
+  cout<<"\n3.DECIMAL TO OCTAL";
+
+  cout<<"\n4.OCTAL TO BINARY";
+
+  cout<<"\n5.OCTAL TO BINARY";
+
+  cout<<"\n6.BINARY TO OCTAL";
+
+  cout<<"\n0.EXIT";
+
+  cout<<"\nENTER YOUR CHOICE: ";
+
+  cin>>ch;
+
+
+  switch(ch)
+
+  {
+
+   case 1 ://decimal to binary
+
+    cout<<"\nENTER THE DECIMAL NUMBER YOU WANT TO CONVERT:";
+
+    cin>>d;
+
+    b=dectobin(d);
+
+    cout<<"\nTHE CONVERTED BINARY NUMBER: "<<b;
+
+    break;
+
+
+   case 2 ://binary to decimal
+
+    cout<<"\nENTER THE BINARY NUMBER YOU WANT TO CONVERT:";
+
+    cin>>b;
+
+    d=bintodec(b);
+
+    cout<<"\nTHE CONVERTED DECIMAL NUMBER: "<<d;
+
+    break;
+
+
+   case 3 ://decimal to octal
+
+    cout<<"\nENTER THE DECIMAL NUMBER YOU WANT TO CONVERT: ";
+
+    cin>>d;
+
+    o=dectooct(d);
+
+    cout<<"\nTHE CONVERTED OCTAL NUMBER: "<<o;
+
+    break;
+
+
+   case 4 ://octal to decimal
+
+    cout<<"\nENTER THE OCTAL NUMBER YOU WANT TO CONVERT: ";
+
+    cin>>o;
+
+    d=octtodec(o);
+
+    cout<<"\nTHE CONVERTED DECIMAL NUMBER: "<<d;
+
+    break;
+
+
+   case 5 ://octal to binary
+
+    cout<<"\nENTER THE OCTAL NUMBER YOU WANT TO CONVERT: ";
+
+    cin>>o;
+
+    b=octtobin(o);
+
+    cout<<"\nTHE CONVERTED BINARY NUMBER: "<<b;
+
+    break;
+
+
+   case 6 ://binary to octal
+
+    cout<<"\nENTER THE BINARY NUMBER YOU WANT TO CONVERT: ";
+
+    cin>>b;
+
+    o=bintooct(b);
+
+    cout<<"\nTHE CONVERTED OCTAL NUMBER: "<<o;
+
+    break;
+
+
+   case 0 ://exit
+
+    exit(0);
+
+
+  }
+
+  getch();
+
+ }while(1);
+
+}
