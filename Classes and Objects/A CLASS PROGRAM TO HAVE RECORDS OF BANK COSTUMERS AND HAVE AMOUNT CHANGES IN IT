@@ -1,0 +1,247 @@
+/* Array Of Stucture inside the Class.
+*/
+#include<iostream.h>
+#include<conio.h>
+#include<stdio.h>
+#include<process.h>
+#include<string.h>
+struct cstm
+{
+ unsigned long acno;
+ char name[40];
+ char area[20];
+ char contact[15];
+ float balance;
+};
+class bank
+{
+ cstm C[100];
+ int n;
+ int search_act(unsigned long acno);
+ public:
+  void input();
+  void addmore();
+  void dispall();
+  void dispact();
+  void deposit();
+  void withdraw();
+  bank();
+  bank(cstm c[100],int);
+  ~bank();
+};
+//Default Constructor
+bank::bank()
+{
+ n=1;
+ C[0].acno=00;
+ strcpy(C[0].name,"NO NAME");
+ strcpy(C[0].area,"NIL");
+ strcpy(C[0].contact,"NIL");
+ C[0].balance=1000;
+}
+//Parameterized Constructor
+bank::bank(cstm c[100],int n1)
+{
+ n=n1;
+ for(int i=0; i<n; i++)
+ C[i]=c[i];
+}
+//Destructor
+bank::~bank()
+{
+ cout<<"\n Object is destructed.";
+}
+int bank::search_act(unsigned long acno)
+{
+ int pos;
+ pos=-1;
+ for(int i=0;i<n;i++)
+ {
+  if(acno==C[i].acno)
+  {
+   pos=i;
+   break;
+  }
+ }
+ if(pos==-1)
+  cout<<"\n Account Number Not Found.";
+  return(pos);
+}
+//Input
+void bank::input()
+{
+ int n;
+ cout<<"\n Enter Number Of Custumors";
+ cin>>n;
+ cout<<"\n Enter Details:-";
+ for(int i=0;i<n;i++)
+ {
+  cout<<"\n Customer "<<i+1;
+  cout<<"\n Account Number: ";
+  cin>>C[i].acno;
+  cout<<"\n Name: ";
+  gets(C[i].name);
+  cout<<"\n Area: ";
+  gets(C[i].area);
+  cout<<"\n Contact: ";
+  cin>>C[i].contact;
+  do
+  {
+   cout<<"\n Balance: ";
+   cin>>C[i].balance;
+   if(C[i].balance>=1000)
+    break;
+   else
+    cout<<"\n Balance should be greater than 1000.\n Enter Again.";
+  }while(1);
+ }
+}
+//Add an Account
+void bank::addmore()
+{
+ if(n==100)
+ {
+  cout<<"\n Overloading of data.";
+  getch();
+  return;
+ }
+ cstm c;
+ cout<<"\n Enter The Deatails:-";
+ cout<<"\n Account Number: ";
+ cin>>c.acno;
+ cout<<"\n Name: ";
+ gets(c.name);
+ cout<<"\n Area: ";
+ gets(c.area);
+ cout<<"\n Contact: ";
+ cin>>c.contact;
+ do
+ {
+  cout<<"\n Balance: ";
+  cin>>c.balance;
+  if(c.balance>=1000)
+   break;
+  else
+   cout<<"\n Balance should be greater than 1000.";
+ }while(1);
+ C[n]=c;
+ n++;
+ cout<<"\n Account Added.";
+}
+//Display All The Reacords
+void bank::dispall()
+{
+ for(int i=0;i<n;i++)
+ {
+  cout<<"\n\n Deatails of customer "<<i+1;
+  cout<<"\n Account Number: "<<C[i].acno;
+  cout<<"\n Name: "<<C[i].name;
+  cout<<"\n Area: "<<C[i].area;
+  cout<<"\n Contact: "<<C[i].contact;
+  cout<<"\n Balance: "<<C[i].balance;
+ }
+}
+//Display Details of Given Account Number
+void bank::dispact()
+{
+ int ac;
+ int no;
+ cout<<"\n Enter an Account Number: ";
+ cin>>ac;
+ no=search_act(ac);
+ if(no!=-1)
+ {
+  cout<<"\n\n Account Number: "<<C[no].acno;
+  cout<<"\n Name: "<<C[no].name;
+  cout<<"\n Area: "<<C[no].area;
+  cout<<"\n Contact: "<<C[no].contact;
+  cout<<"\n Balance: "<<C[no].balance;
+ }
+}
+//To deposit
+void bank::deposit()
+{
+ unsigned long acno;
+ int no,b,p;
+ cout<<"\n Enter The Account number: ";
+ cin>>acno;
+ no=search_act(acno);
+ if(no!=-1)
+ {
+  cout<<"\n Enter amount to be deposited: ";
+  cin>>b;
+  p=C[no].balance;
+  C[no].balance+=b;
+  cout<<"\n Updated.\n Previous Balance: "<<p;
+  cout<<"\n Total Balance: "<<C[no].balance;
+  }
+}
+//To withdraw
+void bank::withdraw()
+{
+ unsigned long acno;
+ int no,b,p;
+ cout<<"\n Enter the account number: ";
+ cin>>acno;
+ no=search_act(acno);
+ if(no!=-1)
+ {
+  do
+  {
+   cout<<"\n Enter the amount to be withdrawn: ";
+   cin>>b;
+   p=C[no].balance;
+   C[no].balance-=b;
+   if(C[no].balance<1000)
+   {
+    C[no].balance+=b;// the balance should remain the same
+    cout<<"\n Not Enough Funds.\n Enter Again.";
+   }
+   else
+   {
+    cout<<"\n Money is Withdrawn.\n previous Balance: "<<p;
+    cout<<"\n Total Balance: "<<C[no].balance;
+    break;
+   }
+  }while(1);
+ }
+}
+// MAIN
+void main()
+{
+ bank B;
+ int ch;
+ //MENU
+ do
+ {
+  clrscr();
+  cout<<"\n 0. Exit.";
+  cout<<"\n 1. Input.";
+  cout<<"\n 2. To Add An Account.";
+  cout<<"\n 3. To Display All The Records.";
+  cout<<"\n 4. To Display The Record Of The Given Account Number.";
+  cout<<"\n 5. To Deposit The Money.";
+  cout<<"\n 6. To Withdraw The Money.";
+  cout<<"\n\n ENTER YOUR CHOICE: ";
+  cin>>ch;
+  switch(ch)
+  {
+   case 0 : exit(0);
+     break;
+   case 1 : B.input();
+     break;
+   case 2 : B.addmore();
+     break;
+   case 3 : B.dispall();
+     break;
+   case 4 : B.dispact();
+     break;
+   case 5 : B.deposit();
+     break;
+   case 6 : B.withdraw();
+     break;
+   default : cout<<"\n Enter Valid Choice";
+  }
+ getch();
+ }while(1);
+}
