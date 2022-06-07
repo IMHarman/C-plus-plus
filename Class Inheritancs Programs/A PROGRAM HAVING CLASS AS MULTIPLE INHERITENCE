@@ -1,0 +1,47 @@
+//INHERITANCE PROGRAM
+#include<iostream.h>
+#include<conio.h>
+class student
+{
+ protected:
+  int roll,marks1,marks2;
+ public:
+  void get()
+  {
+   cout<<"\n Enter Roll no:";
+   cin>>roll;
+   cout<<"\n Enter marks1 and mark2:";
+   cin>>marks1>>marks2;
+  }
+};
+class sports
+{
+ protected:
+  int marks_sport;
+ public:
+  void getsm()
+  {
+   cout<<"\n Enter the marks in sports :";
+   cin>>marks_sport;
+  }
+};
+class result:public student , public sports
+{
+ int total, average;
+ public:
+  void display()
+  {
+   total=(marks1 + marks2 + marks_sport);
+   average=total/3;
+   cout<<"\n\n\t Roll No:"<<roll<<"\n\tTotal:"<<total;
+   cout<<"\n\t Average:"<<average;}
+};
+void main()
+{
+ clrscr();
+ result obj;
+ obj.get();
+ obj.getsm();
+ obj.display();
+ getch();
+}
