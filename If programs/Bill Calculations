@@ -1,0 +1,80 @@
+#include<iostream.h>
+
+#include<conio.h>
+
+void main()
+
+{
+
+ float b,cno,su,lu,cu,ba,a;
+
+ char cname[50],bmonth[50];
+
+ clrscr();
+
+ cout<<"\nEnter cunsumer number: ";
+
+ cin>>cno;
+
+ cout<<"\nEnter consumer name: ";
+
+ cin>>cname;
+
+ cout<<"\nEnter bill month: ";
+
+ cin>>bmonth;
+
+ cout<<"\nEnter starting unit: ";
+
+ cin>>su;
+
+ cout<<"\nEnter last unit: ";
+
+ cin>>lu;
+
+
+ cu=lu-su;
+
+ if(cu<=200)
+
+  ba=cu*1.25;
+
+ else
+
+ if(cu<=400)
+
+  ba=200*1.25+(cu-200)*3;
+
+ else
+
+  if(cu>400)
+
+   ba=200*1.25+200*3+(cu-400)*4;
+
+ a=ba*0.02;
+
+ if(cu<=400)
+
+  b=ba-a;
+
+ else
+
+  b=0;
+
+
+ cout<<"\nNAME: "<<cname;
+
+ cout<<"\nBILL NUMBER: "<<cno;
+
+ cout<<"\nUNITS CONSUMED: "<<cu;
+
+ cout<<"\nBILL AMOUNT: "<<ba;
+
+ cout<<"\nAMOUNT OF SUBSIDY: "<<a;
+
+ cout<<"\nTOTAL AMOUNT: "<<b;
+
+ getch();
+
+ }
+
