@@ -1,0 +1,385 @@
+/*DATE:1-02-2019
+PROJECT: TO STORE DETAILS OF THE HOSPITALS
+*/
+#include<iostream.h>
+#include<conio.h>
+#include<iomanip.h>
+#include<string.h>
+#include<stdlib.h>
+#include<stdio.h>
+#include<ctype.h>
+//HOSPITAL STRUCTURE
+struct hos
+{
+ int sno;
+ char name[50];
+ char address[50];
+ char city[10];
+ char pcode[6];
+ char pno[10];
+ char sp[30];
+ char email[30];
+ int rank;
+};
+//F1:INPUT FUNCTION
+void hinput(hos h[],int n)
+{
+ int i,a;
+ for(i=0;i<n;i++)
+ {
+  h[i].sno=i+1;
+  cout<<"\n\nS.no"<<h[i].sno;
+  cout<<"\nENTER THE HOSPITAL NAME: ";
+  gets(h[i].name);
+  cout<<"\nENTER THE ADDRESS OF THE HOSPITALS: ";
+  cout<<"\nADDRESS: ";
+  gets(h[i].address);
+  cout<<"\nCITY: ";
+  cin>>h[i].city;
+  cout<<"\nPINCODE: ";
+  cin>>h[i].pcode;
+  cout<<"\nENTER THE HOSPITAL CONTACT NUMBER: ";
+  cin>>h[i].pno;
+  cout<<"\nENTER THE HOSPITAL SPECIALITY: ";
+  gets(h[i].sp);
+  cout<<"\nENTER THE RANK: ";
+  cin>>h[i].rank;
+  cout<<"\nENTER HOSPITALS E-MAIL ID: ";
+  cin>>h[i].email;
+ }
+}
+//F2 : OUTPUT FUNCTION
+void houtput (hos h[], int n)
+{
+ int i,j;
+ for(i=0;i<n;i++)
+ {
+  cout<<h[i].sno;
+  cout<<"\nHOSPITAL NAME: "<<h[i].name;
+  cout<<setw(40)<<"Address: "<<h[i].address;
+  cout<<"\n CITY: "<<h[i].city;
+  cout<<setw(40)<<"PIN CODE: "<<h[i].pcode;
+  cout<<"\n PHONE: "<<h[i].pno;
+  cout<<setw(40)<<"SPECIALITY: "<<h[i].sp;
+  cout<<"\n Rank"<<h[i].rank;
+  cout<<"\n E-mail: "<<h[i].email;
+ }
+}
+//F3-SPECIALITY SEARCH
+void hssearch(hos h[],int n,char A[])
+{
+ int i,j,pos=-1,c,ctr=1;
+ cout<<"\nNAMES OF HOSPITALS HAVING "<<A<<" AS SPECIALITY: ";
+ for(i=0;i<n;i++)
+ {
+   c=strcmpi(A,h[i].sp);
+   if(c==0)
+   {
+    pos=i;
+    cout<<"\n\n Hospital No: "<<ctr++;
+    cout<<"\n Name: "<<h[pos].name;
+    cout<<"\n Address: "<<h[pos].address;
+    cout<<"\n City: "<<h[pos].city;
+    cout<<"\n Pin Code: "<<h[pos].pcode;
+    cout<<"\n Phone No: "<<h[pos].pno;
+    cout<<"\n Speciality: "<<h[pos].sp;
+    cout<<"\n Rank: "<<h[pos].rank;
+    cout<<"\n Email: "<<h[pos].email;
+   }
+ }
+ if(pos==-1)
+  cout<<"\nNO HOSPITAL IS HAVING THIS SPECIALITY.";
+}
+//F4-CITY SEARCH
+void hcsearch(hos h[],int n,char A[])
+{
+ int i,pos=-1,c,ctr=0;
+ cout<<"\nNAMES OF THE HOSPITALS IN "<<A<<" :";
+ for(i=0;i<n;i++)
+ {
+  c=strcmpi(A,h[i].city);
+  if(c==0)
+  {
+   pos=i;
+   cout<<"\n\n Hospital No: "<<ctr++;
+   cout<<"\n Name: "<<h[pos].name;
+   cout<<"\n Address: "<<h[pos].address;
+   cout<<"\n City: "<<h[pos].city;
+   cout<<"\n Pin Code: "<<h[pos].pcode;
+   cout<<"\n Phone No: "<<h[pos].pno;
+   cout<<"\n Speciality: "<<h[pos].sp;
+   cout<<"\n Rank: "<<h[pos].rank;
+   cout<<"\n Email: "<<h[pos].email;
+  }
+ }
+ if(pos==-1)
+  cout<<"\nNO HOSPITAL IS THEIR IN THAT CITY.";
+}
+//F5 BINARY SEARCH (S.NO.)
+void bsearch (hos h[],int n,int sno)
+{
+ int b,m,l,pos=-1;
+ b=0;
+ l=n-1;
+ do
+ {
+  m=(b+l)/2;
+  if(sno==h[m].sno)
+  {
+   pos=m;
+   break;
+  }
+  else
+   if(sno>h[m].sno)
+   b=m+1;
+   else
+   l=m-1;
+ }while(1);
+ if(pos==-1)
+ cout<<"\n NOT FOUND.";
+ else
+ {
+  cout<<"\nFOUND\n";
+  cout<<"\n S.no: "<<h[pos].sno;
+  cout<<"\n Hospital Name: "<<h[pos].name;
+  cout<<"\n Address: "<<h[pos].address;
+  cout<<"\n City: "<<h[pos].city;
+  cout<<"\n Pin Code: "<<h[pos].pcode;
+  cout<<"\n Phone No: "<<h[pos].pno;
+  cout<<"\n Speciality: "<<h[pos].sp;
+  cout<<"\n Rank: "<<h[pos].rank;
+  cout<<"\n Email: "<<h[pos].email;
+ }
+}
+//F6 SORTING-BUBBLE (PINCODE)
+void bubble (hos h[],int n)
+{
+ int i,j;
+ hos temp;
+ for(i=1;i<n;i++)
+  for(j=0;j<n-i;j++)
+  {
+   if(h[j].pcode>h[j+1].pcode)
+   {
+    temp=h[j];
+    h[j]=h[j+1];
+    h[j+1]=temp;
+   }
+ }
+}
+//SORTING- SELECTION (NAME)
+void selection (hos h[], int n)
+{
+ char min[50];
+ hos temp;
+ int i,j,c,pos;
+ for(i=0;i<n-1;i++)
+ {
+  strcpy(min,h[i].name);
+  pos=i;
+  for(j=0;j<n;j++)
+  {
+   c=strcmpi(min,h[j].name);
+   if(c>0)
+   {
+    strcpy(min,h[j].name);
+    pos=j;
+   }
+  }
+  if(pos!=i)
+  {
+   temp=h[i];
+   h[i]=h[pos];
+   h[pos]=temp;
+  }
+ }
+}
+//F7 SORTING- INSERTION (SPECIALITY)
+void insertion (hos h[], int n)
+{
+ hos temp;
+ int i,j,c;
+ for(i=1;i<n;i++)
+ {
+  strcpy(temp.sp,h[i].sp);
+  for(j=i+1;j>0;j--)
+  {
+   c=strcmp(temp.sp,h[j].sp);
+   if(c>0)
+    h[j+1]=h[j];
+   else
+    break;
+   }
+  h[j+1]=temp;
+ }
+}
+//F8-INSRTION OF HOSPITALS DETAILS
+void hinsert(hos h[],int &n,int s,hos item)
+{
+ int i;
+ if(n==s)
+ {
+  cout<<"\nOVER-FLOW. NO MORE INSERTIONS POSSIBLE.";
+  getch();
+  return;
+ }
+ for(i=n-1;i>=0 && item.sno<h[i].sno;i--)
+  h[i+1]=h[i];
+ h[i+1]=item;
+ n++;
+ cout<<"\nDETAILS INSERTED";
+}
+//F9-DELETION OF HOSPITALS DETAILS
+void hdelete(hos h[],int &n,hos item)
+{
+ int pos=-1,i;
+ for(i=0;i<n;i++)
+ {
+  if(h[i].sno==item.sno)
+  {
+   pos=i;
+   break;
+  }
+ }
+ if(pos==-1)
+ {
+  cout<<"\nNOT FOUND.";
+  getch();
+  return;
+ }
+ for(i=pos;i<n;i++)
+  h[i]=h[i+1];
+ h[--n].sno=0;
+ cout<<"\nDETAILS DELETED";
+}
+//F10-MERGING NEW DETAILS
+void hmerge(hos h1[],int m,hos h2[],int n,hos h3[],int &w)
+{
+ w=m+n;
+ int i=0,j=0,k=0;
+ while(i<m && j<n)
+ {
+  if(h1[i].sno<h2[j].sno)
+   h3[k++]=h1[i++];
+  else
+   h3[i++]=h2[j++];
+ }
+ while(i<m)
+  h3[k++]=h1[i++];
+ while(j<n)
+  h3[k++]=h2[j++];
+}
+void main()
+{
+ int i,ch,a,b,n;
+ hos h[10], h1[3];
+ do
+ {
+  clrscr();
+  //MENU
+  cout<<"\n 0. Exit.";
+  cout<<"\n 1. Transverse.";
+  cout<<"\n 2. Search.";
+  cout<<"\n 3. Sorting.";
+  cout<<"\n\n ENTER YOUR CHOICE: ";
+  cin>>ch;
+  switch(ch)
+  {
+   case 0 : exit(0);
+     break;
+   case 1 : do
+     {
+      clrscr();
+      cout<<"\n";
+      cout<<"\n 0. Return.";
+      cout<<"\n 1. Input.";
+      cout<<"\n 2. Output.";
+      cout<<"\n\n ENTER YOUR CHOICE: ";
+      cin>>a;
+      switch(a)
+      {
+       case 1 : cout<<"\n Enter Number Of Hoaspitals: ";
+         cin>>n;
+         cout<<"\n INPUT DETAILS";
+         hinput(h,n);
+         break;
+       case 2 : cout<<"\n OUTPUT TABLE";
+         houtput(h,n);
+         break;
+      }
+     getch();
+     }while(a!=0);
+     break;
+   case 2 : do
+     {
+      clrscr();
+      cout<<"\n";
+      cout<<"\n 0. Return.";
+      cout<<"\n 1. Linear Search.";
+      cout<<"\n 2. Binary Search.";
+      cout<<"\n\n ENTER YOUR CHOICE: ";
+      cin>>a;
+      switch(a)
+      {
+       case 1 : do
+         {
+   clrscr();
+   cout<<"\n 0. Back.";
+   cout<<"\n 1. Speciality.";
+   cout<<"\n 2. City.";
+   cout<<"\n\n ENTER YOUR CHOICE: ";
+   cin>>b;
+   char A[20];
+   switch (b)
+   {
+    case 1 : cout<<"\nEnter the speciality: ";
+      cin>>A;
+      hssearch(h,n,A);
+      break;
+    case 2 : cout<<"\n Enter the City: ";
+      cin>>A;
+      hcsearch(h,n,A);
+      break;
+   }
+         getch();
+         }while(b!=0);
+         break;
+       case 2 : int sno;
+         cout<<"\n Enter the S.no: ";
+         cin>>sno;
+         bsearch(h,n,sno);
+         break;
+       }
+      getch();
+     }while(a!=0);
+     break;
+   case 3 : do
+     {
+      clrscr();
+      cout<<"\n 0. Return.";
+      cout<<"\n 1. Pincode.";
+      cout<<"\n 2. Name.";
+      cout<<"\n 3. Speciality.";
+      cout<<"\n ENTER YOUR CHOICE: ";
+      cin>>a;
+      switch (a)
+      {
+       case 1 : cout<<"\n YOUR PINCODE LIST:-";
+         bubble(h,n);
+         houtput(h,n);
+         break;
+       case 2 : cout<<"\n YOUR NAME LIST:-";
+         selection(h,n);
+         houtput(h,n);
+         break;
+       case 3 : cout<<"\n YOUR SPECIALITY LIST:-";
+         insertion(h,n);
+         houtput(h,n);
+         break;
+      }
+     getch();
+     }while(a!=0);
+  }
+ getch();
+ }while(1);
+}
