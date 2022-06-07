@@ -1,0 +1,48 @@
+#include<iostream.h>
+
+#include<conio.h>
+
+#include<math.h>
+
+void main()
+
+{
+
+ int no,s,d,D,n;
+
+ s=0;
+
+ clrscr();
+
+ cout<<"\nEnter a number: ";
+
+ cin>>no;
+
+ d=no;
+
+ do
+
+ {
+
+ n=d%10;
+
+ D=pow(n,3);
+
+ d=d/10;
+
+ s=s+D;
+
+ }while(d!=0);
+
+ if(s==0)
+
+  cout<<'\n'<<no<<"is not an armstrong number.";
+
+ else
+
+  cout<<'\n'<<no<<"is an armstrong number.";
+
+ getch();
+
+}
+
