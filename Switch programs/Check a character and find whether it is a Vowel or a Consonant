@@ -1,0 +1,48 @@
+#include<iostream.h>
+
+#include<conio.h>
+
+void main()
+
+{
+
+Clrscr();
+
+char ch;
+
+cout<<"\n Enter a character: ";
+
+cin>>ch;
+
+
+if(ch>='A' && ch<='Z')
+
+{
+
+ cout<<"\n Upper case alphabet";
+
+ switch(ch)
+
+ {
+
+  case 'A' :case 'E' :case 'I' :case 'O' :case 'U':
+
+  {
+
+   cout<<"\n It is a vowel.";break;
+
+  }
+
+  default :cout<<"\n It is a consonent";
+
+ }
+
+}
+
+else
+
+ cout<<"\n It is not a upper case alphabet";
+
+getch();
+
+}
