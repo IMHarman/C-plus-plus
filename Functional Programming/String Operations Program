@@ -1,0 +1,651 @@
+#include<iostream.h>
+
+#include<conio.h>
+
+#include<stdlib.h>
+
+#include<ctype.h>
+
+#include<stdio.h> //for gets
+
+
+//F-1 To Get The Lenght Of The String.
+
+unsigned long strl (char A[])
+
+{
+
+ int i;
+
+ for(i=0;A[i];i++);
+
+ return(i);
+
+}
+
+
+//F-2 To Copy a string into another string.
+
+void strcopy (char des[],char src[])
+
+{
+
+ int i;
+
+ for(i=0;src[i];i++)
+
+ des[i]=src[i];
+
+ des[i]='\0';
+
+}
+
+
+//F-3 To catinate two string.
+
+void strcat (char des[], char src[])
+
+{
+
+ int i,j;
+
+ for(i=0;des[i];i++);
+
+ for(j=0;src[j];j++,i++)
+
+ des[i]=src[j];
+
+ des[i]='\0';
+
+}
+
+
+//F-4 To add to srings in third.
+
+void stradd (char str3[],char str1[],char str2[])
+
+{
+
+ int i,j;
+
+ for(i=0;str1[i];i++)
+
+ str3[i]=str1[i];
+
+ for(j=0;str2[j];j++,i++)
+
+ str3[i]=str2[j];
+
+ str3[i]='\0';
+
+}
+
+
+//F-5 To reverse the string
+
+void revstr (char str[])
+
+{
+
+ int i,j;
+
+ char temp;
+
+ for(i=0;str[i];i++);
+
+ for(j=0,i--;j<i;j++,i--)
+
+ {
+
+  temp=str[i];
+
+  str[i]=str[j];
+
+  str[j]=temp;
+
+ }
+
+}
+
+
+//F-6 To check string for palindrome.
+
+int ispalistr (char str[])
+
+{
+
+ int rep=1,i,j;
+
+ for(i=0;str[i];i++);
+
+ for(j=0,i--;j<i;j++,i--)
+
+  if(str[i]!=str[j])
+
+  {
+
+   rep=0;
+
+   break;
+
+  }
+
+ return(rep);
+
+}
+
+
+///F-7 To reverse the case of a given alphabet.
+
+void revcase (char str[],char alph)
+
+{
+
+ int i,j,ctr1=0,ctr2=0;
+
+ char ralph;
+
+ if(!('z'>=alph<='a'|| 'Z'>=alph<='A'))
+
+  {
+
+   cout<<"\n Enter a Valid Alphabet";
+
+   cin>>alph;
+
+  }
+
+  else
+
+  {
+
+   if(isupper(alph))
+
+    ralph=tolower(alph);
+
+
+   if(islower(alph))
+
+    ralph=toupper(alph);
+
+
+   for(i=0;str[i];i++)
+
+   {
+
+    if(str[i]==alph)
+
+      {
+
+      str[i]=ralph;
+
+      ctr1++;
+
+      }
+
+    else
+
+     if(str[i]==ralph)
+
+     {
+
+      str[i]=alph;
+
+      ctr2++;
+
+     }
+
+   }
+
+   int T=ctr1+ctr2;
+
+   cout<<"\nYour New String Is:- "<<str;
+
+   cout<<"\nTotal Changes: "<<T;
+
+ }
+
+}
+
+
+
+//F-8 To Display the Frequency Table Ignoring Case Sensivity.
+
+void ftablei (char str[])
+
+{
+
+ int i,p;
+
+ int ctr[26];
+
+ for(i=0;i<26;i++)
+
+  ctr[i]=0;
+
+ for(i=0;str[i];i++)
+
+ {
+
+  if(isupper(str[i]))
+
+   {
+
+    p=str[i]-'A';
+
+    ctr[p]++;
+
+   }
+
+  if(islower(str[i]))
+
+  {
+
+   p=str[i]-'a';
+
+   ctr[p]++;
+
+  }
+
+ }
+
+ cout<<"\n Alphabet\t Frequency\n";
+
+ for(i=0;i<26;i++)
+
+  if(ctr[i]!=0)
+
+  cout<< (char)(i+65)<<"\t\t\t"<<ctr[i]<<'\n';
+
+}
+
+
+//F-9 To Display The Frequency With Case Sensivity.
+
+void ftable (char str[])
+
+{
+
+ int i,p;
+
+ int ctr1[26],ctr2[26];
+
+ for(i=0;i<26;i++)
+
+ ctr1[i]=ctr2[i]=0;
+
+ for(i=0;str[i];i++)
+
+ {
+
+  if(islower(str[i]))
+
+  {
+
+   p=str[i]-'a';
+
+   ctr1[p]++;
+
+  }
+
+  if(isupper(str[i]))
+
+  {
+
+   p=str[i]-'A';
+
+   ctr2[p]++;
+
+  }
+
+ }
+
+ cout<<"\n Alphabet\tFrequency\nSmall\n";
+
+ for(i=0;i<26;i++)
+
+  if(ctr1[i]!=0)
+
+   cout<<(char)(i+97)<<"\t\t\t"<<ctr1[i]<<'\n';
+
+ cout<<"\n Capital\n";
+
+ for(i=0;i<26;i++)
+
+  if(ctr2[i]!=0)
+
+    cout<<(char)(i+65)<<"\t\t\t"<<ctr2[i]<<'\n';
+
+}
+
+
+//F-10 To Display The Frequency of Numbers.
+
+void fnum (char str[])
+
+{
+
+ int i,j,ctr[10];
+
+ for(i=0;i<10;i++)
+
+  ctr[i]=0;
+
+ char n[]={'0','1','2','3','4','5','6','7','8','9'};
+
+ for(i=0;str[i];i++)
+
+  for(j=0;n[j];j++)
+
+   if(str[i]==n[j])
+
+   {
+
+    ctr[j]+=1;
+
+    break;
+
+   }
+
+ cout<<"\n Numbers\t frquency\n";
+
+ for(i=0;i<10;i++)
+
+  if(ctr[i]!=0)
+
+   cout<<i<<"\t\t "<<ctr[i]<<'\n';
+
+}
+
+
+//F-11 Default Spaces Should Be One.
+
+void space (char str2[],char str1[])
+
+{
+
+ int i,j,ctr=0;
+
+ for(j=0,i=0;str1[i];i++)
+
+ {
+
+  if(str1[i]!=' ')
+
+  {
+
+   str2[j]=str1[i];
+
+   j++;
+
+   ctr=0;
+
+  }
+
+  if(str1[i]==' ')
+
+   ctr++;
+
+  if(ctr==1)
+
+   {
+
+    str2[j]=' ';
+
+    j++;
+
+   }
+
+ }
+
+ str2[j]='\0';
+
+}
+
+
+//F-12 To Reverse Each Word In A Sting.
+
+void revwor (char str1[],char str2[])
+
+{
+
+ int i,j,k,l;
+
+ char temp;
+
+ for(i=0;str1[i];i++)
+
+ {
+
+  for(j=0;str1[i]&&str1[i]!=' ';i++,j++)
+
+  str2[j]=str1[i];
+
+  str2[j]='\0';
+
+  for(k=0;str2[k];k++);
+
+  for(k--,l=0;l<k;l++,k--)
+
+  {
+
+   temp= str2[l];
+
+   str2[l]=str2[k];
+
+   str2[k]=temp;
+
+  }
+
+  cout<<str2<<' ';
+
+ }
+
+}
+
+
+
+void main()
+
+{
+
+ clrscr();
+
+ int ch,i;
+
+ char a,str1[100],str2[100],str3[100],str[20];
+
+ do
+
+ {
+
+  clrscr();
+
+  cout<<"\n STRING MENUE";
+
+  cout<<"\n 0. Exit.";
+
+  cout<<"\n 1. To Get The Length Of The String.";
+
+  cout<<"\n 2. To Copy A String.";
+
+  cout<<"\n 3. To Catenate A String.";
+
+  cout<<"\n 4. To Add Two Strings.";
+
+  cout<<"\n 5. To Reverse A String.";
+
+  cout<<"\n 6. To Check For String Palindrome.";
+
+  cout<<"\n 7. To Reverse The Case Of The String.";
+
+  cout<<"\n 8. To Display Alphabetic Frequency Table.";
+
+  cout<<"\n 9. To Display Alphabetic Frequency Table (Case Sensivity).";
+
+  cout<<"\n 10. To Display Numeric Frequency Table.";
+
+  cout<<"\n 11. To Check For Spaces.";
+
+  cout<<"\n 12. To Reverse The Words.";
+
+  do
+
+  {
+
+   cout<<"\n\n ENTER YOUR CHOICE: ";
+
+   cin>>ch;
+
+   if(ch>=0||ch<=12)
+
+    break;
+
+   else
+
+    cout<<"\n Enter a Valid Choice.";
+
+  }while(1);
+
+
+  switch (ch)
+
+  {
+
+   case 0 : exit(0);
+
+     break;
+
+   case 1 : cout<<"\n Enter The String: ";
+
+     gets(str1);
+
+     cout<<"\n The Length Is: "<<strl(str1);
+
+     break;
+
+   case 2 : cout<<"\n Enter The String: ";
+
+     gets(str1);
+
+     strcopy(str2,str1);
+
+     cout<<"\n The String Copied is: "<<str2;
+
+     break;
+
+   case 3 : cout<<"\n Enter The destination String: ";
+
+     gets(str1);
+
+     cout<<"\n Enter Source String: ";
+
+     gets(str2);
+
+     strcat(str1,str2);
+
+     cout<<"\n The New String Is: "<<str1;
+
+     break;
+
+   case 4 : cout<<"\n Enter The String1: ";
+
+     gets(str1);
+
+     cout<<"\n Enter The String2: ";
+
+     gets(str2);
+
+     stradd(str3,str1,str2);
+
+     cout<<"\n The New String Is: "<<str3;
+
+     break;
+
+   case 5 : cout<<"\n Enter The String: ";
+
+     gets(str1);
+
+     revstr(str1);
+
+     cout<<"\n The New String Is: "<<str1;
+
+     break;
+
+   case 6 : cout<<"\n Enter The String: ";
+
+     gets(str1);
+
+     i=ispalistr(str1);
+
+     if(i==0)
+
+     cout<<"NO, It Is Not a Palindrome.";
+
+     if(i==1)
+
+     cout<<"YES, It Is A Palindrome.";
+
+     break;
+
+   case 7 : cout<<"\n Enter The String: ";
+
+     gets(str1);
+
+     cout<<"\n Enter The Alphabet To Be Reversed: ";
+
+     cin>>a;
+
+     revcase (str1,a);
+
+     break;
+
+   case 8 : cout<<"\n Enter The String: ";
+
+     gets(str1);
+
+     ftablei(str1);
+
+     break;
+
+   case 9 : cout<<"\n Enter The String: ";
+
+     gets(str1);
+
+     ftable(str1);
+
+     break;
+
+   case 10 : cout<<"\n Enter The String: ";
+
+      gets(str1);
+
+      fnum(str1);
+
+      break;
+
+   case 11 : cout<<"\n Enter The String: ";
+
+      gets(str1);
+
+      space(str2,str1);
+
+      cout<<"\n The New String Is: "<<str2;
+
+      break;
+
+   case 12 : cout<<"\n Enter The String: ";
+
+      gets(str1);
+
+      revwor(str1,str);
+
+      break;
+
+   }
+
+  getch();
+
+ }while(1);
+
+}
