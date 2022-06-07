@@ -1,0 +1,43 @@
+#include<iostream.h>
+
+#include<conio.h>
+
+void main()
+
+{
+
+ int no,rev,d,n;
+
+ clrscr();
+
+ cout<<"\nEnter a number: ";
+
+ cin>>no;
+
+ rev=0;
+
+ n=no;
+
+ do
+
+ {
+
+ d=no%10;
+
+ rev=rev*10+d;
+
+ no=no/10;
+
+ }while(no!=0);
+
+ if(rev==n)
+
+  cout<<"\n"<<n<<" is a palindrone number.";
+
+ else
+
+  cout<<"\n"<<n<<" is not a palindrone number.";
+
+ getch();
+
+}
