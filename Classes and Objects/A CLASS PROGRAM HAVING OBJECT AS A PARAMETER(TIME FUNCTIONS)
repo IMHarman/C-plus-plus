@@ -1,0 +1,253 @@
+/*
+ Object As A Parameter (TIME)
+This program contains Adding the times with Different methods, Getting Difference and Displaying the time in Two Formats.
+*/
+#include<iostream.h>
+#include<conio.h>
+#include<string.h>
+#include<stdio.h>
+#include<process.h>
+class time
+{
+ int hr,min,sec;
+ public:
+ time();
+ time(int,int,int);
+ ~time();
+ void gettime();
+ void showtime12();
+ void showtime24();
+ void addtime(time,time);
+ time addtime(time);
+ void addtime1(time);
+ void difftime(time,time);
+ };
+//Default Constructor
+ time::time()
+{
+  hr=12;
+  min=40;
+  sec=50;
+}
+//Parameterized Constructor
+ time::time(int h,int m,int s)
+{
+ hr=h;
+ min=m;
+ sec=s;
+}
+//Destructor
+ time::~time()
+{
+ cout<<"\n object destructed";
+}
+//To get Valid Time
+ void time::gettime()
+ {
+  do
+  {
+   int c=0;
+   cout<<"\n Enter hours,minutes and seconds";
+   cin>>hr>>min>>sec;
+   if(sec>=60)
+   c++;
+   if(min>=60)
+   c++;
+   if(hr>24)
+   c++;
+   if(c>0)
+   {
+   cout<<"\n Invalid time";
+   cout<<"\n Enter again";
+   }
+   else
+   break;
+ }while(1);
+}
+// To Display In 12 Hours Format
+void time::showtime12()
+{
+ char v[5];
+ if(hr>12)
+ {
+ hr=hr-12;
+ strcpy(v,"pm");
+ }
+ else
+ strcpy(v,"am");
+ cout<<"Time in 12 hr\t"<<hr<<":"<<min<<":"<<sec;gets(v);
+}
+//To Display In 24 Hours Format
+void time::showtime24()
+{
+ cout<<"\n Time in 24 hr\t"<<hr<<":"<<min<<":"<<sec;
+}
+//To Add Time ( two times as parameter)
+void time:: addtime(time a,time b)
+{
+  hr=min=sec=0;
+  sec=a.sec+b.sec;
+  if(sec>=60)
+  {
+  sec-=60;
+  min++;
+  }
+  min+=a.min+b.min;
+  if(min>=60)
+  {
+   min-=60;
+   hr++;
+  }
+  hr+=a.hr+b.hr;
+}
+//To Add Two Times (Time As A Return Type)
+time time::addtime(time a)
+{
+ time t;
+ t.hr=t.min=t.sec=0;
+ t.sec=a.sec+sec;
+  if(t.sec>=60)
+  {
+   t.sec-=60;
+   t.min++;
+   }
+ t.min+=a.min+min;
+ if(t.min>=60)
+ {
+  t.min-=60;
+  t.hr++;
+  }
+ t.hr+=a.hr+hr;
+ return t;
+}
+// To Add Two Times (With Void as Return Type)
+void time ::addtime1(time a)
+{
+ sec+=a.sec;
+ if(sec>=60)
+ {
+  sec-=60;
+  min++;
+ }
+ min+=a.min;
+  if(min>=60)
+  {
+   min-=60;
+   hr++;
+  }
+  hr+=a.hr;
+}
+// To get The Difference Betwwen Two times
+void time::difftime(time a,time b)
+{
+ hr=min=sec=0;
+ if(a.hr>b.hr)
+ {
+ if(a.sec<b.sec)
+ {
+  a.min--;
+  a.sec+=60;
+ }
+ sec=a.sec-b.sec;
+ if(a.min<b.min)
+ {
+  a.hr--;
+  a.min+=60;
+ }
+ min=a.min-b.min;
+ hr=a.hr-b.hr;
+ }
+ else
+ if(b.hr>a.hr)
+ {
+ if(b.sec<a.sec)
+ {
+  b.min--;
+  b.sec+=60;
+ }
+ sec=b.sec-a.sec;
+ if(a.min<b.min)
+ {
+  b.hr--;
+  b.min+=60;
+ }
+ min=b.min-a.min;
+ hr=b.hr-a.hr;
+ }
+}
+//MAIN
+void main()
+{
+ clrscr();
+ time t1,t2,t3;
+ int ch;
+ // Menu
+ do
+ {
+  clrscr();
+  cout<<"\n Time functions.";
+  cout<<"\n 0. To Exit.";
+  cout<<"\n 1. To get valid time.";
+  cout<<"\n 2. To show time in 12 hour format.";
+  cout<<"\n 3. To show time in 24 hour format.";
+  cout<<"\n 4. To add two given times and put it in a current object.";
+  cout<<"\n 5. To add a given time." ;
+  cout<<"\n 6. To add given time and put in current object.";
+  cout<<"\n 7. To get the difference between two times.";
+  cout<<"\n\n ENTER YOUR CHOICE: ";
+  cin>>ch;
+  switch(ch)
+  {
+   case 0 : exit(0);
+     break;
+   case 1 : t1.gettime();
+     break;
+   case 2 : t1.showtime12();
+     break;
+   case 3 : t2.showtime24();
+     break;
+   case 4 : cout<<"\n Enter the Time: ";
+     t2.gettime();
+     cout<<"\n Time 1: ";
+     t1.showtime12();
+     cout<<"\n Time 2: ";
+     t2.showtime12();
+     t3.addtime(t1,t2);
+     cout<<"\n Final: ";
+     t3.showtime12();
+     break;
+   case 5 : cout<<"\n Enter The Time: ";
+     t3.gettime();
+     cout<<"\n Time 1: ";
+     t1.showtime12();
+     cout<<"\n Time 2: ";
+     t3.showtime12();
+     t2=t3.addtime(t1);
+     cout<<"\n Final: ";
+     t2.showtime12();
+     break;
+   case 6 : cout<<"\n Enter The Time: ";
+     t3.gettime();
+     cout<<"\n Time 1: ";
+     t1.showtime12();
+     cout<<"\n Time 2: ";
+     t3.showtime12();
+     t3.addtime1(t1);
+     cout<<"\n Final: ";
+     t3.showtime12();
+     break;
+   case 7 : cout<<"\n Enter Time: ";
+     t3.gettime();
+     cout<<"\n Time 1: ";
+     t1.showtime12();
+     cout<<"\n Time 2: ";
+     t3.showtime12();
+     t2.difftime(t1,t3);
+     cout<<"\n Final: ";
+     t2.showtime12();
+     break;
+   default : cout<<"\n Enter Valid Choice.";
+  }
+  getch();
+ }while(1);
+}
