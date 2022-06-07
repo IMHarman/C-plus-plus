@@ -1,0 +1,85 @@
+#include<iostream.h>
+
+#include<conio.h>
+
+void main()
+
+{
+
+ float p,se,nb,final,per;
+
+ char grade;
+
+ unsigned long rollno;
+
+ char name[50];
+
+ clrscr();
+
+ cout<<"\nEnter your board roll number: ";
+
+ cin>>rollno;
+
+ cout<<"\nEnter your name: ";
+
+ cin>>name;
+
+ cout<<"\nEnter your periodic marks: ";
+
+ cin>>p;
+
+ cout<<"\nEnter your subject enrishment: ";
+
+ cin>>se;
+
+ cout<<"\nEnter your notebook marks: ";
+
+ cin>>nb;
+
+ cout<<"\nEnter your boards marks: ";
+
+ cin>>final;
+
+
+ per=final+se+nb+p;
+
+ if(per>=90)
+
+  grade='A';
+
+ else
+
+ if(per>=75)
+
+  grade='B';
+
+ else
+
+  if(per>=60)
+
+   grade='C';
+
+  else
+
+   if(per>=50)
+
+    grade='D';
+
+   else
+
+    grade='E';
+
+ cout<<"\nMY RESULT DETAILS";
+
+ cout<<"\n\nRoll number: "<<rollno;
+
+ cout<<"\nName: "<<name;
+
+ cout<<"\nPercentage: "<<per;
+
+ cout<<"\nGrade: "<<grade;
+
+ getch();
+
+}
+
