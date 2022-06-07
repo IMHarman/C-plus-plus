@@ -1,0 +1,984 @@
+//HS BANKING
+#include<fstream.h>
+#include<conio.h>
+#include<stdio.h>
+#include<string.h>
+#include<iomanip.h>
+#include<process.h>
+#include<ctype.h>
+#include<math.h>
+//Class of bank
+class bank
+{
+ char uname[50];
+ char pcode[30];
+ float balance;
+ char pno[20];
+ char email[30];
+ char adhno[309];
+ char panno[30];
+ char acno[30];
+ public:
+ void input();
+ void append();
+ char* Uname()
+ {
+  return(uname);
+ }
+ char* Pcode()
+ {
+  return(pcode);
+ }
+ void ipcode(char p[])//fn
+ {
+  strcpy(pcode,p);
+ }
+ float Balance()
+ {
+  return(balance);
+ }
+ void nbalance(float b)//fn
+ {
+  balance-=b;
+ }
+ void pbalance(float b)//fn
+ {
+  balance+=b;
+ }
+ char* Pno()
+ {
+  return(pno);
+ }
+ void cpno(char p[])//fn
+ {
+  strcpy(pno,p);
+ }
+ char* Email()
+ {
+  return(email);
+ }
+ void cemail(char e[])//fn
+ {
+  strcpy(email,e);
+ }
+ char* Adhno()
+ {
+  return(adhno);
+ }
+ char* Panno()
+ {
+  return(panno);
+ }
+ char* Acno()
+ {
+  return (acno);
+ }
+};
+//Name Check
+int ncheck(char nm[])
+{
+ int a=1;
+ for(int i=0;nm[i]!='\0';i++)
+ {
+  if(isalpha(nm[i]))
+   a=0;
+ }
+ return(a);
+}
+//Account Number Check
+int ancheck (char ac[])
+{
+ int a=1,ctr=0;
+ for(int i=0;ac[i]!='\0';i++)
+  if(isdigit(ac[i]))
+   ctr++;
+ if (ctr==16 && i==16)
+  a=0;
+ return(a);
+}
+//Password Check
+int passcheck (char p[])
+{
+ int a=1,ctr=0;
+ for(int i=0;p[i]!='\0';i++)
+  if(isalnum(p[i]))
+   ctr++;
+ if(i<=12 && ctr<=12)
+  a=0;
+ return(a);
+}
+//Phone Number Check
+int pncheck (char pn[])
+{
+ int a=1,ctr=0;
+ for(int i=0;pn[i]!='\0';i++)
+  if(isdigit(pn[i]))
+   ctr++;
+ if(ctr==10 && i==10)
+  a=0;
+ return(a);
+}
+//Balance check
+int bcheck(int b)
+{
+ int a=1;
+ if(b>=2000)
+  a=0;
+ return(a);
+}
+//Adhar Number Check
+int adcheck(char ad[])
+{
+ int a=1,ctr=0;
+ for(int i=0;ad[i]!='\0';i++)
+  if(isdigit(ad[i]))
+   ctr++;
+ if(ctr==12 && i==12)
+  a=0;
+ return(a);
+}
+//Pan Number Check
+int PNcheck (char pn[])
+{
+ int a=1,ctr=0;
+ for(int i=0;pn[i]!='\0';i++)
+  if(isalnum(pn[i]))
+   ctr++;
+ if(ctr==10 && i==10)
+  a=0;
+ return(a);
+}
+//input bank details
+void bank::input()
+{
+ ofstream f("bank.dat",ios::binary|ios::out);
+ if(!f)
+ {
+  cout<<"\nFile creation fails.";
+  getch();
+  return;
+ }
+ char reply;
+ bank b;
+ int ctr=0,x;
+ do
+ {
+  clrscr();
+  cout<<"\n"<<setw(35)<<" INPUT PAGE";
+  cout<<"\n RECORD: "<<ctr+1;
+  do
+  {
+   cout<<"\nUsername: ";
+   gets(b.uname);
+   x=ncheck(b.uname);
+   if(x==0)
+    break;
+   else
+    cout<<"\n NOTE: Enter Valid Name.";
+  }while(1);
+  do
+  {
+   cout<<"\nPassword : ";
+   cin>>b.pcode;
+   x=passcheck(b.pcode);
+   if(x==0)
+    break;
+   else
+    cout<<"\n NOTE: Passward Should Contain Atmost 12 Characters.";
+  }while(1);
+  do
+  {
+   cout<<"\nAccount number: ";
+   cin>>b.acno;
+   x=ancheck(b.acno);
+   if(x==0)
+    break;
+   else
+    cout<<"\n NOTE: Account Number Should Be Of 16 Digits.";
+  }while(1);
+  do
+  {
+   cout<<"\nBalance: ";
+   cin>>b.balance;
+   x=bcheck(b.balance);
+   if(x==0)
+    break;
+   else
+    cout<<"\n NOTE: Entery Balance Should Be Above 2000.";
+  }while(1);
+  do
+  {
+   cout<<"\nPhone number: ";
+   cin>>b.pno;
+   x=pncheck(b.pno);
+   if(x==0)
+    break;
+   else
+    cout<<"\n NOTE: Phone Number Should Contain 10 Digits.";
+  }while(1);
+  cout<<"\nEmail id: ";
+  cin>>b.email;
+  do
+  {
+   cout<<"\nAdhaar number: ";
+   cin>>b.adhno;
+   x=adcheck(b.adhno);
+   if(x==0)
+    break;
+   else
+    cout<<"\n NOTE: Adhar Number Should Contain 12 Digits.";
+  }while(1);
+  do
+  {
+   cout<<"\nPan number: ";
+   cin>>b.panno;
+   x=PNcheck(b.panno);
+   if(x==0)
+    break;
+   else
+    cout<<"\n NOTE: Pan Number Should Contain 10 Alpha-Numeric Characters.";
+   }while(1);
+  f.write((char*)&b,sizeof(b));
+  cout<<"\n\n Press Y To Enter More: ";
+  cin>>reply;
+ }while(reply=='y' || reply=='Y');
+ f.close();
+}
+//Append
+void bank::append()
+{
+ ofstream f("bank.dat",ios::binary|ios::app);
+ int reply;
+ if(!f)
+ {
+  cout<<"\nFile opening error.";
+  getch();
+  return;
+ }
+ bank b;
+ int x;
+  do
+  {
+   cout<<"\nUsername: ";
+   gets(b.uname);
+   x=ncheck(b.uname);
+   if(x==0)
+    break;
+   else
+    cout<<"\n NOTE: Enter Valid Name.";
+  }while(1);
+  do
+  {
+   cout<<"\nPassword : ";
+   cin>>b.pcode;
+   x=passcheck(b.pcode);
+   if(x==0)
+    break;
+   else
+    cout<<"\n NOTE: Passward Should Contain Atmost 12 Characters.";
+  }while(1);
+  do
+  {
+   cout<<"\nAccount number: ";
+   cin>>b.acno;
+   x=ancheck(b.acno);
+   if(x==0)
+    break;
+   else
+    cout<<"\n NOTE: Account Number Should Be Of 16 Digits.";
+  }while(1);
+  do
+  {
+   cout<<"\nBalance: ";
+   cin>>b.balance;
+   x=bcheck(b.balance);
+   if(x==0)
+    break;
+   else
+    cout<<"\n NOTE: Entery Balance Should Be Above 2000.";
+  }while(1);
+  do
+  {
+   cout<<"\nPhone number: ";
+   cin>>b.pno;
+   x=pncheck(b.pno);
+   if(x==0)
+    break;
+   else
+    cout<<"\n NOTE: Phone Number Should Contain 10 Digits.";
+  }while(1);
+  cout<<"\nEmail id: ";
+  cin>>b.email;
+  do
+  {
+   cout<<"\nAdhaar number: ";
+   cin>>b.adhno;
+   x=adcheck(b.adhno);
+   if(x==0)
+    break;
+   else
+    cout<<"\n NOTE: Adhar Number Should Contain 12 Digits.";
+  }while(1);
+  do
+  {
+   cout<<"\nPan number: ";
+   cin>>b.panno;
+   x=PNcheck(b.panno);
+   if(x==0)
+    break;
+   else
+    cout<<"\n NOTE: Pan Number Should Contain 10 Alpha-Numeric Characters.";
+   }while(1);
+ f.write((char*)&b,sizeof(b));
+ f.close();
+}
+//Delete a record
+void Delete(char a[])
+{
+ ifstream f1("bank.dat",ios::binary);
+ ofstream f2("temp.dat",ios::binary);
+ int flag=1;
+ if(!f1)
+ {
+  cout<<"\nFile reading fails.";
+  getch();
+  return;
+ }
+ if(!f2)
+ {
+  cout<<"\nFile creation fails.";
+  getch();
+  return;
+ }
+ bank b;
+ while(f1.read((char*)&b,sizeof(b)))
+ {
+  int c=strcmp(a,b.Acno());
+  if(c!=0)
+   f2.write((char*)&b,sizeof(b));
+  else
+   flag=0;
+ }
+ f1.close();
+ f2.close();
+ if(flag==1)
+  cout<<"\nRecord not found.";
+ else
+ {
+  remove("bank.dat");
+  rename("temp.dat","bank.dat");
+  cout<<"\nRecord Deleted.";
+ }
+}
+//username password check
+int check (char un[],char pass[], char ano[])
+{
+ bank b;
+ ifstream f("bank.dat",ios::binary);
+ if(!f)
+ {
+  cout<<"\nNo Record In The Bank Database.";
+  getch();
+  return(-1);
+ }
+ int flag =-1;
+ double loc;
+ while(f.read((char*)&b,sizeof(b)))
+ {
+  int c=strcmp(un,b.Uname());
+  int d=strcmp(pass,b.Pcode());
+  int e=strcmp(ano,b.Acno());
+  if(c==0 && d==0 && e==0)
+  {
+   flag=0; //true
+  }
+  else
+   flag=-1;//false
+ }
+ f.close();
+ return(flag);
+}
+//forgot password
+void fpass(char un[],char ac[],char ad[])
+{
+ fstream f("bank.dat",ios::binary|ios::in|ios::out);
+ if(!f)
+ {
+  cout<<"\nNo Record In Bank Database.";
+  getch();
+  return;
+ }
+ bank b;
+ char p[20];
+ int flag=1;
+ while(f.read((char*)&b,sizeof(b)))
+ {
+  int c=strcmp(un,b.Uname());
+  int d=strcmp(ac,b.Acno());
+  int e=strcmp(ad,b.Adhno());
+  if(c==0 && d==0 && e==0)
+  {
+   flag=0;
+   cout<<"\nEnter New Password: ";
+   cin>>p;
+   b.ipcode(p);
+   long loc=f.tellg();
+   f.seekg(loc,ios::beg);
+   f.write((char*)&b,sizeof(b));
+  }
+ }
+ if(flag==1)
+  cout<<"\nRecord Not Found.";
+ else
+  cout<<"\nPassword Updated.";
+ f.close();
+}
+//Fund transfer
+void fd(char a[])
+{
+ ofstream f("temp.dat",ios::binary);
+ ifstream f1("bank.dat",ios::binary);
+ if(!f)
+ {
+  cout<<"\nFile creation fails.";
+  getch();
+  return;
+ }
+ if(!f1)
+ {
+  cout<<"\nFile opening fails.";
+  getch();
+  return;
+ }
+ bank b;
+ int flag=1,ch;
+ float amount;
+ while(f1.read((char*)&b,sizeof(b)))
+ {
+  int c=strcmp(a,b.Acno());
+  if(c==0)
+  {
+   flag=0;
+   cout<<"\nEnter Your FD Amount: ";
+   cin>>amount;
+   b.nbalance(amount);
+   cout<<"\nSNO.\tTIME PERIOD\tINTEREST";
+   cout<<"\n 1. \t 1 year \t 6.50%";
+   cout<<"\n 2. \t 2 years \t 6.50%";
+   cout<<"\n 3. \t 3 years \t 6.25%";
+   cout<<"\n 4. \t 4 years \t 6.25%";
+   cout<<"\n 5. \t 5 years \t 6.00%";
+   cout<<"\n\nENTER YOUR CHOICE: ";
+   cin>>ch;
+   switch(ch)
+   {
+    case 1 : amount=amount*pow((1+0.065),1);
+      break;
+    case 2 : amount=amount*pow((1+0.065),2);
+      break;
+    case 3 : amount=amount*pow((1+0.0625),3);
+      break;
+    case 4 : amount=amount*pow((1+0.0625),4);
+      break;
+    case 5 :amount=amount*pow((1+0.06),5);
+     break;
+    default:cout<<"\nENTER A VALID CHOICE.";
+   }
+   cout<<"\n\n\nYOUR MATURE AMOUNT WILL BE: "<<amount;
+  }
+ f.write((char*)&b,sizeof(b));
+ }
+ f.close();
+ f1.close();
+ if(flag==1)
+  cout<<"\nRECORD NOT FOUND.";
+ else
+ {
+  remove("bank.dat");
+  rename("temp.dat","bank.dat");
+ }
+}
+//EMI
+void emi(char a[])
+{
+ ifstream f("bank.dat",ios::binary,ios::nocreate);
+ ofstream f1("temp.dat",ios::binary);
+ if(!f)
+ {
+  cout<<"\n No Records,";
+  getch(); return;
+ }
+ if(!f1)
+ {
+  cout<<"\n No Records,";
+  getch(); return;
+ }
+ bank b;
+ float r,P,E,A,I;
+ int n;//no. of months
+ int c,flag=1,ch;
+ while(f.read((char*)&b,sizeof(b)))
+ {
+  c=strcmp(a,b.Acno());
+  if(c==0)
+  {
+   flag=0;
+   do
+   {
+    clrscr();
+    cout<<"\n"<<setw(40)<<"EMI";
+    cout<<"\n 0. Back.";
+    cout<<"\n 1. To Get Home Loans.";
+    cout<<"\n 2. To get Car Loans.";
+    cout<<"\n\n ENTER YOUR CHOICE: ";
+    cin>>ch;
+    switch(ch)
+    {
+     case 0 : return;
+     case 1 : //Home Loans
+       cout<<"\n"<<setw(36)<<" HOME LOANS";
+       cout<<"\n\n The Interest Rate Is 8.25% per year.";
+       cout<<"\n\n Enter the following details: ";
+       cout<<"\n Loan Amount: ";//amount borrowed
+       cin>>P;
+       cout<<"\n Loan Term: ";
+       cin>>n;
+       r=0.0825;//r=interest rate/12
+       I=pow((1+r),n);
+       E=P*((float)(r*I)/(I-1));
+       int in;
+       in=(E*n)-P;
+       A=in+P; //Final amount
+       if((b.Balance()-A)<100000)
+       {
+        cout<<"\n Not Enough Collateral.";
+        getch();
+        return;
+       }
+       cout<<"\n Monthly EMI: "<<(float)E/12;
+       cout<<"\n Principle Paid: "<<P;
+       cout<<"\n Interest Paid: "<<in;
+       cout<<"\n Total Repayment: "<<A;
+       break;
+     case 2 : //Car Loans
+      cout<<"\n"<<setw(37)<<" CAR LOANS";
+      cout<<"\n\n The Interest Rate Is 12 per year.";
+      cout<<"\n Loan Amount: ";
+      cin>>P;
+      cout<<"\n Loan Term (Years): ";
+      cin>>n;
+      r=0.12;
+      I=pow((1+r),n);
+      E=P*((float)(r*I)/(I-1));
+      in=(E*n)-P;// p+in=emi*time in months
+      A=in+P; //Final amount
+      if((b.Balance()-A)<100000)
+      {
+       cout<<"\n Not Enough Collateral.";
+       getch();
+       return;
+       }
+       cout<<"\n Monthly EMI: "<<E/12;
+       cout<<"\n Principle Paid: "<<P;
+       cout<<"\n Interest Paid: "<<in;
+       cout<<"\n Total Repayment: "<<A;
+      break;
+      default : cout<<"\n Enter Valid choice.";
+     }
+     getch();
+    }while(1);
+   }
+  f1.write((char*)&b,sizeof(b));
+ }
+ f1.close();
+ f.close();
+ if(flag==1)
+  cout<<"\n Record not found.";
+ else
+ {
+  remove("bank.dat");
+  rename("temp.dat","bank.dat");
+ }
+}
+//Bill payment
+void bpay(char a[])
+{
+ ofstream f("temp.dat",ios::binary);
+ ifstream f1("bank.dat",ios::binary);
+ if(!f)
+ {
+  cout<<"\nFile creation fails.";
+  getch();
+  return;
+ }
+ if(!f1)
+ {
+  cout<<"\nFile opening fails.";
+  getch();
+  return;
+ }
+ bank b;
+ int flag=1;
+ char line[100];
+ float amount;
+ while(f1.read((char*)&b,sizeof(b)))
+ {
+  int c=strcmp(a,b.Acno());
+  if(c==0)
+  {
+   flag=0;
+   cout<<"\nEnter Your Amount: ";
+   cin>>amount;
+   cout<<"\nEnter Your Payment Statement: ";
+   gets(line);
+   b.nbalance(amount);
+  }
+  f.write((char*)&b,sizeof(b));
+ }
+ f.close();
+ f1.close();
+ if(flag==1)
+  cout<<"\nPayment Fails. RETRY!!!";
+ else
+ {
+  cout<<"\nYour Transaction of ";
+  cout<<line<<" "<<amount<<" Is Successful." ;
+  remove("bank.dat");
+  rename("temp.dat","bank.dat");
+ }
+}
+//Edit profile
+void pro_pno(char a[])
+{
+ ofstream f("temp.dat",ios::binary);
+ ifstream f1("bank.dat",ios::binary);
+ if(!f)
+ {
+  cout<<"\nFile creation fails.";
+  getch();
+  return;
+ }
+ if(!f1)
+ {
+  cout<<"\nFile opening fails.";
+  getch();
+  return;
+ }
+ bank b;
+ int flag=1;
+ char line[100],p[12];
+ while(f1.read((char*)&b,sizeof(b)))
+ {
+  int c=strcmp(a,b.Acno());
+  if(c==0)
+  {
+   flag=0;
+   cout<<"\nEnter The New Phone Number: ";
+   cin>>p;
+   b.cpno(p);
+  }
+  f.write((char*)&b,sizeof(b));
+ }
+ f1.close();
+ f.close();
+ if(flag==1)
+  cout<<"\nProcess fails.Retry!!!.";
+ else
+ {
+  cout<<"\nPhone Number Updated.";
+  remove("bank.dat");
+  rename("temp.dat","bank.dat");
+ }
+}
+void pro_email(char a[])
+{
+ ofstream f("temp.dat",ios::binary);
+ ifstream f1("bank.dat",ios::binary);
+ if(!f)
+ {
+  cout<<"\nFile creation fails.";
+  getch();
+  return;
+ }
+ if(!f1)
+ {
+  cout<<"\nFile opening fails.";
+  getch();
+  return;
+ }
+ bank b;
+ int flag=1;
+ char line[100],e[20];
+ while(f1.read((char*)&b,sizeof(b)))
+ {
+  int c=strcmp(a,b.Acno());
+  if(c==0)
+  {
+   flag=0;
+   cout<<"\nEnter The New Email ID: ";
+   cin>>e;
+   b.cemail(e);
+  }
+  f.write((char*)&b,sizeof(b));
+ }
+ f.close();
+ f1.close();
+ if(flag==1)
+  cout<<"\nProgress Fails.";
+ else
+ {
+  cout<<"\nEmail Updated.";
+  remove("bank.dat");
+  rename("temp.dat","bank.dat");
+ }
+}
+//input transactions
+void trans(char a[])
+{
+ fstream f("bank.dat",ios::binary|ios::in|ios::out);
+ if(!f)
+ {
+  cout<<"\nFile opening error.";
+  getch();
+  return;
+ }
+ bank b;
+ float amount;
+ double loc;
+ int flag=1;
+ char bal;
+ while(f.read((char*)&b,sizeof(b)))
+ {
+  int c=strcmp(a,b.Acno());
+  if(c==0)
+  {
+   flag=0;
+   int ch;
+   do
+   {
+    clrscr();
+    cout<<"\n"<<setw(35)<<"Transaction";
+    cout<<"\n 0. Back.";
+    cout<<"\n 1. To Withdraw.";
+    cout<<"\n 2. To Deposit.";
+    cout<<"\n\n ENTER YOUR CHOICE: ";
+    cin>>ch;
+    switch(ch)
+    {
+     case 0 : return;
+     case 1 : //withdtraw
+       cout<<"\n Enter The Amount To Be Withdrawn.";
+       cin>>amount;
+       loc=f.tellg();
+       f.seekg(loc-sizeof(b),ios::beg);
+       cout<<"\n Old Balance: "<<b.Balance();
+       b.nbalance(amount);
+       f.write((char*)&b,sizeof(b));
+       cout<<"\n New Balance: "<<b.Balance();
+       cout<<"\n\n Money Successfully Withdrawn.";
+       break;
+     case 2 : //deposit
+       cout<<"\n Enter The Amount To Be Deposited.";
+       cin>>amount;
+       loc=f.tellg();
+       f.seekg(loc-sizeof(b),ios::beg);
+       cout<<"\n Old Balance: "<<b.Balance();
+       b.pbalance(amount);
+       f.write((char*)&b,sizeof(b));
+       cout<<"\n New Balance: "<<b.Balance();
+       cout<<"\n Money Successfully Deposited.";
+       break;
+     default : cout<<"\n Enter Valid Choice.";
+    }
+   getch();
+  }while(1);
+  }
+ }
+ if(flag==1)
+  cout<<"\n NOT FOUNFD.";
+ f.close();
+}
+//main
+void main()
+{
+ int ch1;
+  clrscr();
+  fstream f("bank.dat",ios::binary|ios::in|ios::out);
+  if(!f)
+  {
+   cout<<"\n File does not exist.";
+   getch(); return;
+  }
+  bank b;
+  b.input();
+  do
+  {
+  clrscr();
+  //Main Menu
+  cout<<setw(35)<<"HS BANKING";
+  cout<<"\n\n"<<setw(35)<<"HOME PAGE";
+  cout<<"\n\n 0. Exit.";
+  cout<<"\n 1. Login.";
+  cout<<"\n 2. New User.";
+  cout<<"\n 3. New Password.";
+  cout<<"\n ENTER YOUR CHOICE: ";
+  cin>>ch1;
+  switch (ch1)
+  {
+   case 0 : clrscr();
+     cout<<"\n\n\n\n\n"<<setw(35)<<"Thank You For Visiting ^-^";
+     cout<<"\n"<<setw(37)<<"May You Have A Nice Day.";
+     getch();
+     exit(0);
+     break;
+   case 1 : //Login
+     clrscr();
+     cout<<setw(35)<<"LOGIN PAGE";
+     //login page menu
+     int ctr=0;
+     char uname[50],p[30];
+     int x,a;
+     char acno[30];
+     do
+     {
+      cout<<"\n Enter The Following Details:-";
+      do
+      {
+       cout<<"\n Username: ";
+       gets(uname);
+       a=ncheck(uname);
+       if(a==0)
+        break;
+       else
+        cout<<"\n Enter A Valid Name.";
+       }while(1);
+      do
+      {
+       cout<<"\n Passward: ";
+       cin>>p;
+       a=passcheck(p);
+       if(a==0)
+        break;
+       else
+        cout<<"\n NOTE: Passward Should Contain 12 Characters At Most.";
+       }while(1);
+       do
+       {
+       cout<<"\n Account Number: ";
+       cin>>acno;
+       a=ancheck(acno);
+       if(a==0)
+        break;
+       else
+        cout<<"\nNOTE: Account number Should Be Of 16 Digits.";
+       }while(1);
+       x=check(uname,p,acno);//Acno. of the object
+       if(x!=-1)
+        break;
+      else
+       cout<<"\n\n Invalid Username or Passward. Please Try again.";
+      }while(ctr<=3);//it will ask to enter the passward 3 times and then exit itself
+     if(x!=-1)//x stores the acno of the user.
+     {
+      do
+      {
+       clrscr();
+       cout<<"\n"<<setw(35)<<" User Page";
+        //User Page Menu
+        int ch2;
+        cout<<"\n\n\n 0. back";
+        cout<<"\n 1. Transaction (Input)";
+        cout<<"\n 2. Fixed Deposit (FD)";
+        cout<<"\n 3. Edit Email";
+        cout<<"\n 4. Edit Phone Number";
+        cout<<"\n 5. EMI";
+        cout<<"\n 6. Delete Profile";
+        cout<<"\n\n Enter Your Choice: ";
+        cin>>ch2;
+       switch(ch2)
+       {
+        case 0 : break;
+        case 1 : //Transaction (input)
+   clrscr();
+   cout<<"\n"<<setw(34)<<"TRANSACTIONS";
+   trans(acno);
+   break;
+        case 2 : //FD
+   clrscr();
+   cout<<"\n"<<setw(34)<<"FIXED DEPOSIT";
+   fd(acno);
+   break;
+        case 3 : //Edit profile email id
+   clrscr();
+   cout<<"\n"<<setw(36)<<"NEW EMAIL";
+   pro_email(acno);
+   break;
+        case 4 : //Edit Profile phone number
+   clrscr();
+   cout<<"\n"<<setw(32)<<" NEW PHONE NUMBER";
+   pro_pno(acno);
+   break;
+        case 5 : //bill Payment
+   clrscr();
+   emi(acno);
+   break;
+        case 6 : //Delete Profile
+   Delete(acno);
+   cout<<"\n\n THANK YOU FOR BEING WITH US ^-^";
+   break;
+        default : cout<<"\n ENTER VALID CHOICE.";
+       }
+       getch();
+       break;
+      }while(1);
+     }
+     else
+      cout<<"\n\n You have already tried 3 times. Try again later.";
+     break;
+   case 2 : //New User
+     clrscr();
+     cout<<"\n"<<setw(31)<<" Welcome New User ";
+     cout<<"\n\n Please Enter The Following Details:-";
+     b.append();
+     break;
+   case 3 : //New Password
+     char ad[30],ac[30];
+     cout<<'\n'<<setw(34)<<"New Password";
+     cout<<"\n NOTE: Please Fill In The Following Details: ";
+     do
+     {
+      cout<<"\n\n Username";
+      gets(uname);
+      a=ncheck(uname);
+      if(a==0)
+        break;
+       else
+        cout<<"\n Enter A Valid Name.";
+     }while(1);
+     do
+     {
+      cout<<"\n Account Number: ";
+      cin>>ac;
+      a=ancheck(ac);
+      if(a==0)
+        break;
+       else
+        cout<<"\nNOTE: Account Number Should Be Of 16 Digits.";
+     }while(1);
+     do
+     {
+      cout<<"\n Adhar Number: ";
+      cin>>ad;
+      a=adcheck(ad);
+      if(a==0)
+        break;
+       else
+        cout<<"\nNOTE: The Adhar Number Contains 12 Digits.";
+     }while(1);
+     fpass(uname,ac,ad);
+     break;
+   default : cout<<"\n Enter A Valid Choice.";
+  }
+  getch();
+ }while(1);
+}
