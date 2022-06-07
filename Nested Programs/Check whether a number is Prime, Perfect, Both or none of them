@@ -1,0 +1,80 @@
+#include<iostream.h>
+
+#include<conio.h>
+
+#include<math.h>
+
+void main()
+
+{
+
+ clrscr();
+
+ int no,i,fac,s;
+
+ char reply='y';
+
+ do
+
+ {
+
+  fac=0;s=0;
+
+  cout<<"\nEnter a number: ";
+
+  cin>>no;
+
+  for(i=2;i<=no/2;++i)
+
+   if(no%i==0)
+
+   {
+
+    fac++;
+
+    break;
+
+   }
+
+  for(i=1;i<=no/2;++i)
+
+   if(no%i==0)
+
+    s+=i;
+
+  if(no==1)
+
+   fac=1;
+
+  if(fac==0 && s==no)
+
+    cout<<"\n"<<no<<" is prime and perfect number." ;
+
+  else
+
+     if(fac!=0 && s==no)
+
+      cout<<"\n"<<no<<" is a perfect number." ;
+
+     else
+
+       if(fac==0 &&s!=no)
+
+ cout<<"\n"<<no<<" is a prime number.";
+
+       else
+
+ if(fac!=0 && s!=no)
+
+  cout<<"\n"<<no<<" is neither a prime nor perfect" ;
+
+  cout<<"\nEnter 'y' or 'Y' to continue and 'quit();' to exit: ";
+
+  cin>>reply;
+
+ }while(reply=='y'||reply=='Y');
+
+ getch();
+
+}
+
